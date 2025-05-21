@@ -5,6 +5,18 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Api", "BisiyonPanelAPI.Api\BisiyonPanelAPI.Api.csproj", "{9593AD27-76A1-4EE2-A1C4-17ECB7B31C19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Domain", "BisiyonPanelAPI.Domain\BisiyonPanelAPI.Domain.csproj", "{648CECC7-2EEA-4C3C-B260-5996DA38F44A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Common", "BisiyonPanelAPI.Common\BisiyonPanelAPI.Common.csproj", "{981EE8C9-20F9-4388-B536-5339F5314C5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Interface", "BisiyonPanelAPI.Interface\BisiyonPanelAPI.Interface.csproj", "{D1FF1792-3CA1-4EB4-A6E3-010F3BB20466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Service", "BisiyonPanelAPI.Service\BisiyonPanelAPI.Service.csproj", "{39ABD10B-5DD0-44C1-96AE-5FF4A3BC3E7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Migration", "BisiyonPanelAPI.Migration\BisiyonPanelAPI.Migration.csproj", "{A84CED3F-5EFF-4229-BE17-FBD18EC5A5EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BisiyonPanelAPI.Infrastructure", "BisiyonPanelAPI.Infrastructure\BisiyonPanelAPI.Infrastructure.csproj", "{34C2077A-3385-4C87-9250-066EBA94C078}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +30,29 @@ Global
 		{9593AD27-76A1-4EE2-A1C4-17ECB7B31C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9593AD27-76A1-4EE2-A1C4-17ECB7B31C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9593AD27-76A1-4EE2-A1C4-17ECB7B31C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{648CECC7-2EEA-4C3C-B260-5996DA38F44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{648CECC7-2EEA-4C3C-B260-5996DA38F44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{648CECC7-2EEA-4C3C-B260-5996DA38F44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{648CECC7-2EEA-4C3C-B260-5996DA38F44A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{981EE8C9-20F9-4388-B536-5339F5314C5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{981EE8C9-20F9-4388-B536-5339F5314C5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{981EE8C9-20F9-4388-B536-5339F5314C5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{981EE8C9-20F9-4388-B536-5339F5314C5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1FF1792-3CA1-4EB4-A6E3-010F3BB20466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1FF1792-3CA1-4EB4-A6E3-010F3BB20466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1FF1792-3CA1-4EB4-A6E3-010F3BB20466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1FF1792-3CA1-4EB4-A6E3-010F3BB20466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39ABD10B-5DD0-44C1-96AE-5FF4A3BC3E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39ABD10B-5DD0-44C1-96AE-5FF4A3BC3E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39ABD10B-5DD0-44C1-96AE-5FF4A3BC3E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39ABD10B-5DD0-44C1-96AE-5FF4A3BC3E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A84CED3F-5EFF-4229-BE17-FBD18EC5A5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A84CED3F-5EFF-4229-BE17-FBD18EC5A5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A84CED3F-5EFF-4229-BE17-FBD18EC5A5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A84CED3F-5EFF-4229-BE17-FBD18EC5A5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34C2077A-3385-4C87-9250-066EBA94C078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34C2077A-3385-4C87-9250-066EBA94C078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34C2077A-3385-4C87-9250-066EBA94C078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34C2077A-3385-4C87-9250-066EBA94C078}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
