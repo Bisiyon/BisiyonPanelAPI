@@ -1,8 +1,10 @@
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Service;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 var configurationBuilder = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -35,7 +37,24 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddDbContext<BisiyonMainContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("MainDb")));
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MainDb"));
+});
+
+builder.Services.AddDbContext<BisiyonAppContext>(options =>
+{
+    options.ConfigureWarnings(builder =>
+                                    {
+                                        builder.Ignore(CoreEventId.NavigationBaseIncludeIgnored);
+                                    });
+    options.UseSqlServer(string.Empty, y =>
+    {
+        y.MigrationsAssembly(Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "BisiyonPanelAPI.Migration.dll")).FullName);
+        y.CommandTimeout(1200);
+        y.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null);
+    });
+
+});
 
 builder.Services.AddHttpContextAccessor();
 

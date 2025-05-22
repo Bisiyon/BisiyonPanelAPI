@@ -3,7 +3,7 @@ using BisiyonPanelAPI.Domain;
 
 namespace BisiyonPanelAPI.Interface
 {
-    public interface IRepositoryBase<T> where T : BaseEntity
+    public interface IRepositoryBase<T> where T : class, IEntity
     {
         Task<Result<List<T>>> GetAllAsync();
         Task<Result<T>> GetAsync(int id);

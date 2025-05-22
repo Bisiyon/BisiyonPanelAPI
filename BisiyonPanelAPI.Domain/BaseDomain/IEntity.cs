@@ -1,6 +1,6 @@
 namespace BisiyonPanelAPI.Domain
 {
-    public class BaseEntity
+    public interface IEntity
     {
 
     }

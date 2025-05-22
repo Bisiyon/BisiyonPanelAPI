@@ -4,7 +4,7 @@ using BisiyonPanelAPI.Interface;
 
 namespace BisiyonPanelAPI.Service
 {
-    public class ServiceBase<T> : IServiceBase<T> where T : BaseEntity
+    public class ServiceBase<T> : IServiceBase<T> where T : class, IEntity
     {
         private readonly IUnitOfWork _unitOfWork;
         public ServiceBase(IUnitOfWork unitOfWork)

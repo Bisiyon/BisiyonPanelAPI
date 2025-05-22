@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BisiyonPanelAPI.Service
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity
+    public class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
 
         private readonly BisiyonAppContext _context;

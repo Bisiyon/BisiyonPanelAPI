@@ -9,9 +9,9 @@ namespace BisiyonPanelAPI.Service
     public class TenantDbContextFactory : ITenantDbContextFactory
     {
         private readonly IConfiguration _configuration;
-        private readonly BisiyonAppContext _mainContext;
+        private readonly BisiyonMainContext _mainContext;
 
-        public TenantDbContextFactory(IConfiguration configuration, BisiyonAppContext mainContext)
+        public TenantDbContextFactory(IConfiguration configuration, BisiyonMainContext mainContext)
         {
             _configuration = configuration;
             _mainContext = mainContext;

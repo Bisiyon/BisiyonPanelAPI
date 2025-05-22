@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace BisiyonPanelAPI.Domain
 {
-    public class User : BaseEntity
+    public class User : IdentityUser, IEntity
     {
-        public int Id { get; set; }
+
     }
 }

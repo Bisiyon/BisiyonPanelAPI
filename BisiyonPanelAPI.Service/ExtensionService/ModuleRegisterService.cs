@@ -25,12 +25,22 @@ namespace BisiyonPanelAPI.Service
                    .As<ITenantDbContextFactory>()
                    .InstancePerLifetimeScope();
 
-            // Örnek: DaireService'i register et (diğer servisler benzer)
-            // builder.RegisterType<DaireService>()
-            //        .AsSelf()
-            //        .InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(RepositoryBase<>))
+                   .As(typeof(IRepositoryBase<>))
+                   .InstancePerLifetimeScope();
 
-            // Başka servisleri buraya ekle
+            builder.RegisterType<UnitOfWork>()
+                  .As<IUnitOfWork>()
+                  .InstancePerLifetimeScope();
+
+            builder.RegisterGeneric(typeof(ServiceBase<>))
+                   .As(typeof(IServiceBase<>))
+                   .InstancePerLifetimeScope();
+
+            builder.RegisterType<UserService>()
+                   .As<IUserService>()
+                   .InstancePerLifetimeScope();
+
         }
     }
 }

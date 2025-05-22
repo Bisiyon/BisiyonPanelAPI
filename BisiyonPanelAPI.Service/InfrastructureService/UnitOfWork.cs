@@ -19,7 +19,7 @@ namespace BisiyonPanelAPI.Service
             _context = _contextFactory.CreateDbContext(siteCode);
         }
 
-        public IRepositoryBase<T> Repository<T>() where T : BaseEntity
+        public IRepositoryBase<T> Repository<T>() where T : class, IEntity
         {
             if (_repositories.ContainsKey(typeof(T)))
                 return (IRepositoryBase<T>)_repositories[typeof(T)];
