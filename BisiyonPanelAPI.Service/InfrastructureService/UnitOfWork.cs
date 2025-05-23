@@ -7,16 +7,14 @@ namespace BisiyonPanelAPI.Service
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ITenantDbContextFactory _contextFactory;
-        private readonly string _siteCode;
         private BisiyonAppContext _context;
         private readonly Dictionary<Type, object> _repositories = new();
         private bool _disposed = false;
 
-        public UnitOfWork(ITenantDbContextFactory contextFactory, string siteCode)
+        public UnitOfWork(ITenantDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _siteCode = siteCode;
-            _context = _contextFactory.CreateDbContext(siteCode);
+            _context = _contextFactory.CreateDbContext();
         }
 
         public IRepositoryBase<T> Repository<T>() where T : class, IEntity

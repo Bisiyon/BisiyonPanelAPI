@@ -7,15 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="../BisiyonPanelAPI.Infrastructure/BisiyonPanelAPI.Infrastructure.csproj" />
+    <ProjectReference Include="../BisiyonPanelAPI.Infrastructure/BisiyonPanelAPI.Infrastructure.csproj" />
     <ProjectReference Include="../BisiyonPanelAPI.Service/BisiyonPanelAPI.Service.csproj" />
     <ProjectReference Include="../BisiyonPanelAPI.Migration/BisiyonPanelAPI.Migration.csproj" />
+    <ProjectReference Include="../BisiyonPanelAPI.View/BisiyonPanelAPI.View.csproj" />
+    <ProjectReference Include="../BisiyonPanelAPI.Common/BisiyonPanelAPI.Common.csproj" />
+    <ProjectReference Include="../BisiyonPanelAPI.Interface/BisiyonPanelAPI.Interface.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="8.3.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="10.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">

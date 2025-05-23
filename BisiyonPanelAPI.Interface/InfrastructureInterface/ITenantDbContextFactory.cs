@@ -4,6 +4,7 @@ namespace BisiyonPanelAPI.Interface
 {
     public interface ITenantDbContextFactory
     {
-        BisiyonAppContext CreateDbContext(string siteCode);
+        BisiyonAppContext CreateDbContext();
+        BisiyonAppContext CreateDbContext(string cs);
     }
 }

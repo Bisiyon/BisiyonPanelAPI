@@ -9,6 +9,12 @@
   <ItemGroup>
     <ProjectReference
       Include="../BisiyonPanelAPI.Infrastructure/BisiyonPanelAPI.Infrastructure.csproj" />
+    <ProjectReference
+      Include="../BisiyonPanelAPI.View/BisiyonPanelAPI.View.csproj" />
+    <ProjectReference
+      Include="../BisiyonPanelAPI.Common/BisiyonPanelAPI.Common.csproj" />
+    <ProjectReference
+      Include="../BisiyonPanelAPI.Domain/BisiyonPanelAPI.Domain.csproj" />
   </ItemGroup>
 
 </Project>
