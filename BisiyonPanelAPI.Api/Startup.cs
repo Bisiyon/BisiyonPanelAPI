@@ -1,6 +1,5 @@
 using System.Reflection;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;

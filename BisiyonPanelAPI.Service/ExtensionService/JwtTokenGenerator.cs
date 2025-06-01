@@ -48,13 +48,14 @@ namespace BisiyonPanelAPI.Service
         public GenerateAccessTokenResponse GenerateToken2(Guid userId, string userName, string siteCode)
         {
             SecurityToken token;
-            var claims = new[] {
-                                        new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.UniqueName, userName),
                 new Claim("siteCode", siteCode.ToString()),
-                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        };
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
             var key = Encoding.UTF8.GetBytes(EnvironmentSettings.JWTSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
