@@ -26,12 +26,19 @@ namespace BisiyonPanelAPI.Service
 
         public IServiceScope CreateScope(string cs)
         {
-            var scope = _serviceProvider.CreateScope();
+            var services = new ServiceCollection();
 
-            var dbContextFactory = scope.ServiceProvider.GetRequiredService<ITenantDbContextFactory>();
-            dbContextFactory.CreateDbContext(cs);
+            services.AddDbContext<BisiyonAppContext>(options =>
+                options.UseSqlServer(cs));
 
-            return scope;
+            services.AddIdentityCore<User>()
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<BisiyonAppContext>();
+
+            services.AddScoped<UserManager<User>>();
+
+            var sp = services.BuildServiceProvider();
+            return sp.CreateScope();
         }
     }
 
@@ -64,9 +71,13 @@ namespace BisiyonPanelAPI.Service
             MainSites? site = await _mainContext.Sites.FirstOrDefaultAsync(x => x.SiteCode == model.SiteCode);
             if (site is null) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found site by site code!" };
             if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
-            BisiyonAppContext context = _tenantDbContextFactory.CreateDbContext(site.DatabaseInfo);
+            using BisiyonAppContext context = _tenantDbContextFactory.CreateDbContext(site.DatabaseInfo);
             // var userStore = new UserStore<User, Role, BisiyonAppContext, Guid>(context);
             // var userManager = new UserManager<User>(userStore, null, new PasswordHasher<User>(), null, null, null, null, null, null);
+
+            // User? user = await context.Users.FirstOrDefaultAsync(x => x.Email == model.UserName);
+            // if (user is null)
+            //     user = await context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == model.UserName);
 
             using var scope = _tenantServiceScopeFactory.CreateScope(site.DatabaseInfo);
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
@@ -84,13 +95,13 @@ namespace BisiyonPanelAPI.Service
                 // if (pwdCheck == PasswordVerificationResult.Success)
                 if (pwdCheck)
                 {
-                    string token = _jwtTokenGenerator.GenerateToken(user.Id, model.UserName, model.SiteCode);
+                    GenerateAccessTokenResponse token = _jwtTokenGenerator.GenerateToken2(user.Id, model.UserName, model.SiteCode);
                     return new Result<LoginResponseView>()
                     {
                         State = ResultState.Successfull,
                         Data = new LoginResponseView()
                         {
-                            Token = token,
+                            Token = token.BearerToken,
                             CreatedDate = DateTime.Now
                         }
                     };
