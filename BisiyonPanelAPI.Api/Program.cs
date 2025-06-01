@@ -31,35 +31,37 @@ namespace BisiyonPanelAPI.Api
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-                Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    var configurationBuilder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("envsettings.json", optional: false, reloadOnChange: true);
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var envSettings = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("envsettings.json", optional: false, reloadOnChange: true)
+            .Build();
 
-                    var envConfig = configurationBuilder.Build();
-                    var environment = envConfig["Environment"] ?? "Production";
+            var environment = envSettings["Environment"] ?? "Production";
 
-                    var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-                    {
-                        EnvironmentName = environment
-                    });
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", environment);
 
-                    builder.Configuration
-                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
+            return Host.CreateDefaultBuilder(args)
+                            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                            .ConfigureAppConfiguration((hostingContext, config) =>
+                            {
+                                config.Sources.Clear();
 
-                    Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", environment);
-                    builder.Environment.EnvironmentName = environment;
+                                config
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile("envsettings.json", optional: false, reloadOnChange: true)
+                                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                                    .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                                    .AddEnvironmentVariables();
+                            })
+                            .ConfigureLogging(config => config.ClearProviders())
+                            .ConfigureWebHostDefaults(webBuilder =>
+                            {
+                                webBuilder.UseStartup<Startup>();
+                            });
+        }
 
-                    webBuilder.UseEnvironment(environment);
-                    webBuilder.UseStartup<Startup>();
-
-                })
-                .ConfigureLogging(config => config.ClearProviders());
     }
 }
 

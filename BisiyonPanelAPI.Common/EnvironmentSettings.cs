@@ -4,6 +4,9 @@ namespace BisiyonPanelAPI.Common
 {
     public static class EnvironmentSettings
     {
+        [Description("EnvironmentName")]
+        public static string EnvironmentName => GetEnvironmentVariable("EnvironmentName", "Development");
+
         [Description("ASPNETCORE_ENVIRONMENT")]
         public static string ASPNETCORE_ENVIRONMENT => GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
 

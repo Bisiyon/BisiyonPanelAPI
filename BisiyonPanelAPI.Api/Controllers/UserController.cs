@@ -20,6 +20,7 @@ namespace BisiyonPanelAPI.Api
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRequestView model)
         {
+            string aa = EnvironmentSettings.EnvironmentName;
             Result<LoginResponseView> result = await _userService.Login(model);
             return Ok(result);
         }
