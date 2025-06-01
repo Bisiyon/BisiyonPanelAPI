@@ -67,7 +67,9 @@ namespace BisiyonPanelAPI.Service
 
         public async Task<Result<LoginResponseView>> Login(LoginRequestView model)
         {
-            if (string.IsNullOrWhiteSpace(model.SiteCode)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Does not site code!" };
+            try
+            {
+                if (string.IsNullOrWhiteSpace(model.SiteCode)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Does not site code!" };
             MainSites? site = await _mainContext.Sites.FirstOrDefaultAsync(x => x.SiteCode == model.SiteCode);
             if (site is null) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found site by site code!" };
             if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
@@ -110,6 +112,11 @@ namespace BisiyonPanelAPI.Service
                 {
                     return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
                 }
+            }
+            }
+            catch (System.Exception ex)
+            {
+                
             }
             return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
         }
