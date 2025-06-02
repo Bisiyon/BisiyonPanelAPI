@@ -3,6 +3,7 @@ using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
 using BisiyonPanelAPI.View;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,12 +42,26 @@ namespace BisiyonPanelAPI.Service
                 if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
                 using var scope = _tenantServiceScopeFactory.CreateScope(site.DatabaseInfo);
 
-                using (BisiyonAppContext context = scope.ServiceProvider.GetRequiredService<BisiyonAppContext>())
+                BisiyonAppContext context = scope.ServiceProvider.GetRequiredService<BisiyonAppContext>();
+                try
                 {
                     await context.Database.MigrateAsync();
                 }
+                catch (Exception)
+                {
+
+                }
 
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+                try
+                {
+                    await AddSystemUser(userManager);
+                }
+                catch (Exception)
+                {
+
+                }
 
                 User? user = await userManager.FindByEmailAsync(model.UserName);
                 if (user is null)
@@ -81,6 +96,25 @@ namespace BisiyonPanelAPI.Service
 
             }
             return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
+        }
+
+        private async Task<Result<bool>> AddSystemUser(UserManager<User> userManager)
+        {
+            string email = "sysadmin@bisiyon.com";
+            User? user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+                return new Result<bool>() { State = ResultState.Successfull, Data = true };
+            user = new User()
+            {
+                UserName = email,
+                Email = email,
+                EmailConfirmed = true,
+                PhoneNumber = "1234567890",
+                PhoneNumberConfirmed = true
+            };
+
+            IdentityResult result = await userManager.CreateAsync(user, "b1siY0n!");
+            return new Result<bool>() { State = result.Succeeded ? ResultState.Successfull : ResultState.Fail, Data = result.Succeeded };
         }
 
     }

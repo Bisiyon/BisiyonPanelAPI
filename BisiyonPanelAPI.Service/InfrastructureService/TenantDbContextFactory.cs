@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using BisiyonPanelAPI.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using System.Reflection;
+using BisiyonPanelAPI.Domain;
 
 namespace BisiyonPanelAPI.Service
 {
@@ -24,8 +25,7 @@ namespace BisiyonPanelAPI.Service
 
         public BisiyonAppContext CreateDbContext()
         {
-            //siteCode'a göre mainContext'den site db'sine ulaşılacak.
-            if (!(_httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false)) return null;
+            if (!(_httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false)) return default;
             var user = _httpContextAccessor.HttpContext?.User;
             var siteCodeClaim = user?.FindFirst("siteCode")?.Value;
 
@@ -34,11 +34,11 @@ namespace BisiyonPanelAPI.Service
 
             string siteCode = siteCodeClaim.ToString();
 
-            var connectionString = _configuration.GetConnectionString("AppDb")
-                ?.Replace("{dbName}", siteCode)
-                ?? throw new Exception("Bağlantı dizesi bulunamadı");
+            MainSites? site = _mainContext.Sites.First(x => x.SiteCode == siteCode);
+            if (site is null)
+                throw new UnauthorizedAccessException("site bulunamadı.");
 
-            return CreateDbContext(connectionString);
+            return CreateDbContext(site.DatabaseInfo ?? "");
         }
 
         public BisiyonAppContext CreateDbContext(string cs)
@@ -52,7 +52,14 @@ namespace BisiyonPanelAPI.Service
             });
 
             BisiyonAppContext context = new BisiyonAppContext(optionsBuilder.Options);
-            //Migration çalıştırılacak. Try catch eklenebilir.
+            try
+            {
+                context.Database.Migrate();
+            }
+            catch (System.Exception)
+            {
+
+            }
             return context;
         }
     }
