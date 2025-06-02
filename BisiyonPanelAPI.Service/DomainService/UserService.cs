@@ -4,45 +4,11 @@ using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
 using BisiyonPanelAPI.View;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BisiyonPanelAPI.Service
 {
-    public interface ITenantServiceScopeFactory
-    {
-        IServiceScope CreateScope(string siteCode);
-    }
-
-    public class TenantServiceScopeFactory : ITenantServiceScopeFactory
-    {
-        private readonly IServiceProvider _serviceProvider;
-
-        public TenantServiceScopeFactory(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
-
-        public IServiceScope CreateScope(string cs)
-        {
-            var services = new ServiceCollection();
-
-            services.AddDbContext<BisiyonAppContext>(options =>
-                options.UseSqlServer(cs));
-
-            services.AddIdentityCore<User>()
-                .AddRoles<Role>()
-                .AddEntityFrameworkStores<BisiyonAppContext>();
-
-            services.AddScoped<UserManager<User>>();
-
-            var sp = services.BuildServiceProvider();
-            return sp.CreateScope();
-        }
-    }
-
-
     public class UserService : ServiceBase<User>, IUserService
     {
         private readonly BisiyonMainContext _mainContext;
@@ -70,53 +36,45 @@ namespace BisiyonPanelAPI.Service
             try
             {
                 if (string.IsNullOrWhiteSpace(model.SiteCode)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Does not site code!" };
-            MainSites? site = await _mainContext.Sites.FirstOrDefaultAsync(x => x.SiteCode == model.SiteCode);
-            if (site is null) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found site by site code!" };
-            if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
-            using BisiyonAppContext context = _tenantDbContextFactory.CreateDbContext(site.DatabaseInfo);
-            // var userStore = new UserStore<User, Role, BisiyonAppContext, Guid>(context);
-            // var userManager = new UserManager<User>(userStore, null, new PasswordHasher<User>(), null, null, null, null, null, null);
+                MainSites? site = await _mainContext.Sites.FirstOrDefaultAsync(x => x.SiteCode == model.SiteCode);
+                if (site is null) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found site by site code!" };
+                if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
+                using BisiyonAppContext context = _tenantDbContextFactory.CreateDbContext(site.DatabaseInfo);
 
-            // User? user = await context.Users.FirstOrDefaultAsync(x => x.Email == model.UserName);
-            // if (user is null)
-            //     user = await context.Users.FirstOrDefaultAsync(x => x.PhoneNumber == model.UserName);
+                using var scope = _tenantServiceScopeFactory.CreateScope(site.DatabaseInfo);
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-            using var scope = _tenantServiceScopeFactory.CreateScope(site.DatabaseInfo);
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                User? user = await userManager.FindByEmailAsync(model.UserName);
+                if (user is null)
+                    user = await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == model.UserName);
 
-            User? user = await userManager.FindByEmailAsync(model.UserName);
-            if (user is null)
-                user = await userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == model.UserName);
-
-            if (user is not null)
-            {
-                var hasher = new PasswordHasher<User>();
-                // var pwdCheck = hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
-                bool pwdCheck = await userManager.CheckPasswordAsync(user, model.Password);
-
-                // if (pwdCheck == PasswordVerificationResult.Success)
-                if (pwdCheck)
+                if (user is not null)
                 {
-                    GenerateAccessTokenResponse token = _jwtTokenGenerator.GenerateToken2(user.Id, model.UserName, model.SiteCode);
-                    return new Result<LoginResponseView>()
+                    var hasher = new PasswordHasher<User>();
+                    bool pwdCheck = await userManager.CheckPasswordAsync(user, model.Password);
+
+                    if (pwdCheck)
                     {
-                        State = ResultState.Successfull,
-                        Data = new LoginResponseView()
+                        GenerateAccessTokenResponse token = _jwtTokenGenerator.GenerateToken2(user.Id, model.UserName, model.SiteCode);
+                        return new Result<LoginResponseView>()
                         {
-                            Token = token.BearerToken,
-                            CreatedDate = DateTime.Now
-                        }
-                    };
+                            State = ResultState.Successfull,
+                            Data = new LoginResponseView()
+                            {
+                                Token = token.BearerToken,
+                                CreatedDate = DateTime.Now
+                            }
+                        };
+                    }
+                    else
+                    {
+                        return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
+                    }
                 }
-                else
-                {
-                    return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
-                }
-            }
             }
             catch (System.Exception ex)
             {
-                
+
             }
             return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "UserNameOrPasswordInCorrect" };
         }

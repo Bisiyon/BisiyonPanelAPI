@@ -16,17 +16,22 @@ namespace BisiyonPanelAPI.Service
 
               protected override void Load(ContainerBuilder builder)
               {
-                     //               builder.RegisterType<UserManager<IdentityUser, Guid>>()
-                     // .As<UserManager<IdentityUser, Guid>>()
-                     // .InstancePerRequest();
+                     #region AppServices
 
                      builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+
+                     #endregion
+
+                     #region InfrastructureService
+
                      builder.RegisterGeneric(typeof(ServiceBase<>)).As(typeof(IServiceBase<>)).InstancePerLifetimeScope();
                      builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
                      builder.RegisterGeneric(typeof(RepositoryBase<>)).As(typeof(IRepositoryBase<>)).InstancePerLifetimeScope();
                      builder.RegisterType<TenantDbContextFactory>().As<ITenantDbContextFactory>().InstancePerLifetimeScope();
                      builder.RegisterType<JwtTokenGenerator>().As<IJwtTokenGenerator>().SingleInstance();
                      builder.RegisterType<TenantServiceScopeFactory>().As<ITenantServiceScopeFactory>().InstancePerLifetimeScope();
+
+                     #endregion
               }
        }
 }
