@@ -30,6 +30,7 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<TenantDbContextFactory>().As<ITenantDbContextFactory>().InstancePerLifetimeScope();
                      builder.RegisterType<JwtTokenGenerator>().As<IJwtTokenGenerator>().SingleInstance();
                      builder.RegisterType<TenantServiceScopeFactory>().As<ITenantServiceScopeFactory>().InstancePerLifetimeScope();
+                     builder.RegisterType<ConfigurationService>().As<IConfigurationService>().InstancePerLifetimeScope();
 
                      #endregion
               }

@@ -39,9 +39,13 @@ namespace BisiyonPanelAPI.Service
                 MainSites? site = await _mainContext.Sites.FirstOrDefaultAsync(x => x.SiteCode == model.SiteCode);
                 if (site is null) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found site by site code!" };
                 if (string.IsNullOrWhiteSpace(site.DatabaseInfo)) return new Result<LoginResponseView>() { State = ResultState.Fail, Message = "Can not found database info by site code!" };
-                using BisiyonAppContext context = _tenantDbContextFactory.CreateDbContext(site.DatabaseInfo);
-
                 using var scope = _tenantServiceScopeFactory.CreateScope(site.DatabaseInfo);
+
+                using (BisiyonAppContext context = scope.ServiceProvider.GetRequiredService<BisiyonAppContext>())
+                {
+                    await context.Database.MigrateAsync();
+                }
+
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
                 User? user = await userManager.FindByEmailAsync(model.UserName);
@@ -55,7 +59,7 @@ namespace BisiyonPanelAPI.Service
 
                     if (pwdCheck)
                     {
-                        GenerateAccessTokenResponse token = _jwtTokenGenerator.GenerateToken2(user.Id, model.UserName, model.SiteCode);
+                        GenerateAccessTokenResponse token = _jwtTokenGenerator.GenerateToken(user.Id, model.UserName, model.SiteCode);
                         return new Result<LoginResponseView>()
                         {
                             State = ResultState.Successfull,

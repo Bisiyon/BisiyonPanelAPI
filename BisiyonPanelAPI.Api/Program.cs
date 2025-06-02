@@ -23,8 +23,9 @@ namespace BisiyonPanelAPI.Api
             {
                 CreateHostBuilder(args).Build().Run();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+
             }
             finally
             {

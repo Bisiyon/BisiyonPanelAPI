@@ -1,6 +1,5 @@
 using System.Reflection;
 using Autofac;
-using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Service;
@@ -62,9 +61,9 @@ namespace BisiyonPanelAPI.Api
                 });
             }).AddIdentity<User, Role>().AddEntityFrameworkStores<BisiyonAppContext>().AddDefaultTokenProviders();
 
-            InitJWT.Init(services);
-            InitSwagger.Init(services);
-            InitCORS.Init(services);
+            services.InitJWT(env.IsDevelopment());
+            services.InitSwagger(env.IsDevelopment());
+            services.InitCORS();
             services.AddHttpContextAccessor();
         }
 
@@ -75,16 +74,13 @@ namespace BisiyonPanelAPI.Api
 
         public void Configure(IApplicationBuilder app)
         {
-            if (EnvironmentSettings.IsDevelopment)
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.EnableDeepLinking();
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BisiyonPanelAPI v1");
-                    c.RoutePrefix = string.Empty;
-                });
-            }
+                c.EnableDeepLinking();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BisiyonPanelAPI v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseCors();
 
