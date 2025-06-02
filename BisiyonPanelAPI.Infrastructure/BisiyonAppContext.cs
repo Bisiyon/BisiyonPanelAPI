@@ -29,6 +29,6 @@ namespace BisiyonPanelAPI.Infrastructure
         public virtual DbSet<MeskenTipi> MeskenTipi { get; set; }
         public virtual DbSet<Uye> Uye { get; set; }
         public virtual DbSet<UyeDurumTip> UyeDurumTip { get; set; }
-        public virtual DbSet<UyeHareket> UyeHareket { get; set; } 
+        public virtual DbSet<UyeHareket> UyeHareket { get; set; }
     }
 }

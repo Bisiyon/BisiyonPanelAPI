@@ -57,7 +57,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Aidat");
+                    b.ToTable("Aidat", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Blok", b =>
@@ -95,7 +95,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blok");
+                    b.ToTable("Blok", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Gorevli", b =>
@@ -126,7 +126,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gorevli");
+                    b.ToTable("Gorevli", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Mesken", b =>
@@ -203,7 +203,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .IsUnique()
                         .HasFilter("[OturanId] IS NOT NULL");
 
-                    b.ToTable("Mesken");
+                    b.ToTable("Mesken", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.MeskenTipi", b =>
@@ -221,7 +221,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeskenTipi");
+                    b.ToTable("MeskenTipi", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Role", b =>
@@ -345,7 +345,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasIndex("UyeDurumTipId");
 
-                    b.ToTable("Uye");
+                    b.ToTable("Uye", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.UyeDurumTip", b =>
@@ -363,7 +363,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UyeDurumTip");
+                    b.ToTable("UyeDurumTip", (string)null);
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.UyeHareket", b =>
@@ -387,7 +387,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.HasIndex("UyeId");
 
-                    b.ToTable("UyeHareket");
+                    b.ToTable("UyeHareket", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
