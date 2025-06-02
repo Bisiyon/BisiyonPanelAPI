@@ -17,7 +17,7 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetAllAsync();
         }
 
-        public async Task<Result<T>> GetByIdAsync(int id)
+        public async Task<Result<T?>> GetByIdAsync(int id)
         {
             return await _unitOfWork.Repository<T>().GetByIdAsync(id);
         }

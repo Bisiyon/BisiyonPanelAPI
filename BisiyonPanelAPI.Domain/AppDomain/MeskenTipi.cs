@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace BisiyonPanelAPI.Domain
 {
@@ -7,7 +6,7 @@ namespace BisiyonPanelAPI.Domain
     {
         [Key]
         public int Id { get; set; }
-        
+
         [StringLength(50)]
         public string Tip { get; set; }
     }

@@ -1,6 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
-
 namespace BisiyonPanelAPI.Domain
 {
     public enum UyeHareketTip

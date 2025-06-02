@@ -20,7 +20,7 @@ namespace BisiyonPanelAPI.Service
 
         public async Task<Result<List<T>>> GetAllAsync()
         {
-            Result<List<T>> result = new Result<List<T>>();
+            Result<List<T>> result = new();
             try
             {
                 result.Data = await _dbSet.ToListAsync();
@@ -35,24 +35,83 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public Task<Result<T>> GetByIdAsync(int id)
+        public async Task<Result<T?>> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            Result<T?> result = new();
+            try
+            {
+                result.Data = await _dbSet.FindAsync(id);
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
         }
 
-        public Task<Result<T>> Insert(T entity)
+        public async Task<Result<T>> Insert(T entity)
         {
-            throw new NotImplementedException();
+            Result<T> result = new();
+            try
+            {
+                await _dbSet.AddAsync(entity);
+                int rst = await _context.SaveChangesAsync();
+                result.Data = entity;
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
         }
 
-        public Task<Result<bool>> Update(T entity)
+        public async Task<Result<bool>> Update(T entity)
         {
-            throw new NotImplementedException();
+            Result<bool> result = new();
+            try
+            {
+                _dbSet.Entry(entity).State = EntityState.Modified;
+                int rst = await _context.SaveChangesAsync();
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
         }
 
-        public Task<Result<bool>> Delete(int id)
+        public async Task<Result<bool>> Delete(int id)
         {
-            throw new NotImplementedException();
+            Result<bool> result = new();
+            try
+            {
+                T? entity = await _dbSet.FindAsync(id);
+                if (entity is null)
+                {
+                    result.Message = "Cannot find entity by id";
+                    result.State = ResultState.Fail;
+                    return result;
+                }
+                _dbSet.Entry(entity).State = EntityState.Deleted;
+                int rst = await _context.SaveChangesAsync();
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
         }
     }
 }
