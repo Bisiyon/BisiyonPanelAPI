@@ -34,3 +34,5 @@ artifacts/
 
 ## Resharper
 _ReSharper_
+BisiyonPanelAPI.Api/appsettings.Development.json
+BisiyonPanelAPI.Api/appsettings.Production.json
