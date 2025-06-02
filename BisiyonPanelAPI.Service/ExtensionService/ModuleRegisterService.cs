@@ -19,6 +19,7 @@ namespace BisiyonPanelAPI.Service
                      #region AppServices
 
                      builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AidatService>().As<IAidatService>().InstancePerLifetimeScope();
 
                      #endregion
 

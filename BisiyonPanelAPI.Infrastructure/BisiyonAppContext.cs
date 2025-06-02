@@ -21,5 +21,14 @@ namespace BisiyonPanelAPI.Infrastructure
 
             }
         }
+
+        public virtual DbSet<Aidat> Aidat { get; set; }
+        public virtual DbSet<Blok> Blok { get; set; }
+        public virtual DbSet<Gorevli> Gorevli { get; set; }
+        public virtual DbSet<Mesken> Mesken { get; set; }
+        public virtual DbSet<MeskenTipi> MeskenTipi { get; set; }
+        public virtual DbSet<Uye> Uye { get; set; }
+        public virtual DbSet<UyeDurumTip> UyeDurumTip { get; set; }
+        public virtual DbSet<UyeHareket> UyeHareket { get; set; } 
     }
 }
