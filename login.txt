@@ -1,2 +1,9 @@
 sysadmin@bisiyon.com
 b1siY0n!
+
+
+{
+  "UserName": "sysadmin@bisiyon.com",
+  "Password": "b1siY0n!",
+  "SiteCode": "001"
+}

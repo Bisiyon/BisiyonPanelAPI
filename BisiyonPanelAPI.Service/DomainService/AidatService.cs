@@ -15,5 +15,7 @@ namespace BisiyonPanelAPI.Service
         public AidatService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
+
+        
     }
 }

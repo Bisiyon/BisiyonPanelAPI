@@ -17,9 +17,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetAllAsync();
         }
 
-        public async Task<Result<T>> GetAsync(int id)
+        public async Task<Result<T>> GetByIdAsync(int id)
         {
-            return await _unitOfWork.Repository<T>().GetAsync(id);
+            return await _unitOfWork.Repository<T>().GetByIdAsync(id);
         }
 
         public async Task<Result<T>> Insert(T entity)

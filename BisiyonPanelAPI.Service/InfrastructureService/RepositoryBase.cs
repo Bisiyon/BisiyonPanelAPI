@@ -35,7 +35,7 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public Task<Result<T>> GetAsync(int id)
+        public Task<Result<T>> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
