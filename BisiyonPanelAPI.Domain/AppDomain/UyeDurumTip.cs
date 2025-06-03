@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class UyeDurumTip : IEntity
+    public class UyeDurumTip : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }

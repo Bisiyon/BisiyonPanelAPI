@@ -1,6 +1,7 @@
 using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
+using BisiyonPanelAPI.Common;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -43,11 +44,11 @@ namespace BisiyonPanelAPI.Api
                 return BadRequest("ID eşleşmiyor.");
 
             var existing = await _meskenService.GetByIdAsync(id);
-            if (existing == null)
+            if (existing.Data == null)
                 return NotFound();
 
-            await _meskenService.Update(mesken);
-            return NoContent();
+            Result<bool> result = await _meskenService.Update(existing.Data, mesken);
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
@@ -57,8 +58,8 @@ namespace BisiyonPanelAPI.Api
             if (existing == null)
                 return NotFound();
 
-            await _meskenService.Delete(id);
-            return NoContent();
+            Result<bool> result = await _meskenService.Delete(id);
+            return Ok(result);
         }
     }
 }

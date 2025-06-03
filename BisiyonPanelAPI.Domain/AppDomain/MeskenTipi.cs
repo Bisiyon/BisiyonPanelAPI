@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class MeskenTipi : IEntity
+    public class MeskenTipi : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }

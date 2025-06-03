@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class Uye : IEntity
+    public class Uye : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }

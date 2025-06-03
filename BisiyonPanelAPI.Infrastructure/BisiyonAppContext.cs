@@ -1,6 +1,7 @@
 using BisiyonPanelAPI.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace BisiyonPanelAPI.Infrastructure
 {
@@ -19,6 +20,21 @@ namespace BisiyonPanelAPI.Infrastructure
             if (!optionsBuilder.IsConfigured)
             {
 
+            }
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                IMutableProperty? property = entityType.FindProperty("ConcurrencyToken");
+                if (property != null)
+                {
+                    property.SetColumnType("ROWVERSION");
+                    property.ValueGenerated = ValueGenerated.OnAddOrUpdate;
+                    property.IsConcurrencyToken = true;
+                }
             }
         }
 

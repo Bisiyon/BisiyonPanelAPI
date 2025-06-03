@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class Blok : IEntity
+    public class Blok : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }

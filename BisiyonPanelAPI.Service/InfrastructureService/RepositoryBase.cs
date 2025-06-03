@@ -71,13 +71,14 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<Result<bool>> Update(T entity)
+        public async Task<Result<bool>> Update(T oldEntity, T newEntity)
         {
             Result<bool> result = new();
             try
             {
-                _dbSet.Entry(entity).State = EntityState.Modified;
+                _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
                 int rst = await _context.SaveChangesAsync();
+                result.Data = rst > 0;
                 result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
             }
             catch (System.Exception ex)
@@ -85,6 +86,7 @@ namespace BisiyonPanelAPI.Service
                 result.Message = ex.Message;
                 result.Exception = ex;
                 result.State = ResultState.Fail;
+                result.Data = false;
             }
             return result;
         }
@@ -103,6 +105,7 @@ namespace BisiyonPanelAPI.Service
                 }
                 _dbSet.Entry(entity).State = EntityState.Deleted;
                 int rst = await _context.SaveChangesAsync();
+                result.Data = rst > 0;
                 result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
             }
             catch (System.Exception ex)
@@ -110,6 +113,7 @@ namespace BisiyonPanelAPI.Service
                 result.Message = ex.Message;
                 result.Exception = ex;
                 result.State = ResultState.Fail;
+                result.Data = false;
             }
             return result;
         }

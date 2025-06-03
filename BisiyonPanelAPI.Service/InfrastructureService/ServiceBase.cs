@@ -27,9 +27,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().Insert(entity);
         }
 
-        public async Task<Result<bool>> Update(T entity)
+        public async Task<Result<bool>> Update(T oldEntity, T newEntity)
         {
-            return await _unitOfWork.Repository<T>().Update(entity);
+            return await _unitOfWork.Repository<T>().Update(oldEntity, newEntity);
         }
 
         public async Task<Result<bool>> Delete(int id)
