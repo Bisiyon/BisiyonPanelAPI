@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class Mesken : IEntity
+    public class Mesken : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }

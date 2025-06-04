@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250603182425_AddedConcurrencyTokenColumn")]
+    partial class AddedConcurrencyTokenColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,50 +67,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Aidat");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.Arac", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Marka")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Plaka")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("Renk")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int?>("UyeId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UyeId");
-
-                    b.ToTable("Arac");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Blok", b =>
@@ -583,17 +542,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.Arac", b =>
-                {
-                    b.HasOne("BisiyonPanelAPI.Domain.Uye", "Uye")
-                        .WithMany()
-                        .HasForeignKey("UyeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Uye");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Mesken", b =>

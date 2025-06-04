@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class UyeDurumTip : IEntity
+    public class UyeDurumTip : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }
