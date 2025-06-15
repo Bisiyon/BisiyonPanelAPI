@@ -14,7 +14,7 @@ namespace BisiyonPanelAPI.Domain
         public int VarsayilanKattakiDaireSayisi { get; set; }
         public int KatBaslangicKati { get; set; }
         public bool MeskenOlusturuldu { get; set; }
-        public int BlokAlanTipId { get; set; }
+        public int BlokTipId { get; set; }
         public int IlId { get; set; }
         public int IlceId { get; set; }
         public string MahalleKoyMezraMevki { get; set; }
@@ -24,10 +24,12 @@ namespace BisiyonPanelAPI.Domain
         public string Aciklama { get; set; }
 
         [ForeignKey(nameof(IlId))]
-        public Il Il { get; set; } 
-        
-        [ForeignKey(nameof(IlceId))]
-        public Ilce Ilce { get; set; } 
+        public Il Il { get; set; }
 
+        [ForeignKey(nameof(IlceId))]
+        public Ilce Ilce { get; set; }
+
+        [ForeignKey(nameof(BlokTipId))]
+        public MeskenTipi MeskenTipi { get; set; }
     }
 }

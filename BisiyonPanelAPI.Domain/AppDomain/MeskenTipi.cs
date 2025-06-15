@@ -6,11 +6,12 @@ namespace BisiyonPanelAPI.Domain
     {
         [Key]
         public int Id { get; set; }
- 
-        /// <summary>
-        /// Mesken, Ticari
-        /// </summary>
+
         [StringLength(50)]
         public string Tip { get; set; }
+
+        [StringLength(3)]
+        public string Kod { get; set; }
+        public string Renk { get; set; }
     }
 }
