@@ -20,16 +20,18 @@ namespace BisiyonPanelAPI.Service
                      #region AppServices
 
                      builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
+
                      builder.RegisterType<AidatService>().As<IAidatService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AidatGrupService>().As<IAidatGrupService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AracService>().As<IAracService>().InstancePerLifetimeScope();
                      builder.RegisterType<BlokService>().As<IBlokService>().InstancePerLifetimeScope();
+                     builder.RegisterType<IlService>().As<IIlService>().InstancePerLifetimeScope(); 
+                     builder.RegisterType<IlceService>().As<IlceService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenService>().As<IMeskenService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenTipiService>().As<IMeskenTipiService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeService>().As<IUyeService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeDurumTipService>().As<IUyeDurumTipService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeHareketService>().As<IUyeHareketService>().InstancePerLifetimeScope();
-                     builder.RegisterType<AracService>().As<IAracService>().InstancePerLifetimeScope();
-                     builder.RegisterType<AidatGrupService>().As<IAidatGrupService>().InstancePerLifetimeScope();
-
 
                      #endregion
 

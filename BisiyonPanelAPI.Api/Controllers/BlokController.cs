@@ -8,10 +8,12 @@ namespace BisiyonPanelAPI.Api
     public class BlokController : BaseController
     {
         private readonly IBlokService _blokService;
+        private readonly IMeskenService _meskenService;
 
-        public BlokController(IBlokService blokService)
+        public BlokController(IBlokService blokService, IMeskenService meskenService)
         {
             _blokService = blokService;
+            _meskenService = meskenService;
         }
 
         [HttpGet]
@@ -42,6 +44,9 @@ namespace BisiyonPanelAPI.Api
         {
             if (id != blok.Id)
                 return BadRequest("ID eşleşmiyor.");
+           
+           /// TO DO Mesken varsa silemez 
+
 
             var existing = await _blokService.GetByIdAsync(id);
             if (existing.Data == null)
@@ -54,6 +59,8 @@ namespace BisiyonPanelAPI.Api
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+
+            /// TO DO Mesken varsa silemez 
             var existing = await _blokService.GetByIdAsync(id);
             if (existing == null)
                 return NotFound();

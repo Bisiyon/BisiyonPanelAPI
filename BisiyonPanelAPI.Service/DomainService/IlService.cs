@@ -10,10 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BisiyonPanelAPI.Service
 {
-    public class AracService : ServiceBase<Arac>, IAracService
+    public class IlService : ServiceBase<Il>, IIlService
     {
-        public AracService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public IlService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
+
     }
 }

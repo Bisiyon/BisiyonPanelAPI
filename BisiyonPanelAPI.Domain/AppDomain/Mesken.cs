@@ -15,7 +15,7 @@ namespace BisiyonPanelAPI.Domain
         public int? Kat { get; set; }
         public int? DaireNo { get; set; }
         public int? M2 { get; set; }
-        public int ArsaPayi { get; set; }
+        public int? ArsaPayi { get; set; }
         public int Oran1 { get; set; } = 100;
         public int Oran2 { get; set; } = 100;
         public int Oran3 { get; set; } = 100;
