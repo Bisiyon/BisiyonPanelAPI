@@ -37,19 +37,19 @@ namespace BisiyonPanelAPI.Api
             return CreatedAtAction(nameof(GetById), new { id = createdBlok.Data.Id }, createdBlok);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
-        {
-            if (id != blok.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
+        // {
+        //     if (id != blok.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var existing = await _blokService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _blokService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            Result<bool> result = await _blokService.Update(existing.Data, blok);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _blokService.Update(existing.Data, blok);
+        //     return Ok(result);
+        // }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

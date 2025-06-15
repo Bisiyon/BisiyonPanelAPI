@@ -37,19 +37,19 @@ namespace BisiyonPanelAPI.Api
             return CreatedAtAction(nameof(GetById), new { id = createdUyeHareket.Data.Id }, createdUyeHareket);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UyeHareket uyeHareket)
-        {
-            if (id != uyeHareket.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] UyeHareket uyeHareket)
+        // {
+        //     if (id != uyeHareket.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var existing = await _uyeHareketService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _uyeHareketService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            Result<bool> result = await _uyeHareketService.Update(existing.Data, uyeHareket);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _uyeHareketService.Update(existing.Data, uyeHareket);
+        //     return Ok(result);
+        // }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

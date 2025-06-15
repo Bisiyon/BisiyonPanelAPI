@@ -37,19 +37,19 @@ namespace BisiyonPanelAPI.Api
             return CreatedAtAction(nameof(GetById), new { id = createdMesken.Data.Id }, createdMesken);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Mesken mesken)
-        {
-            if (id != mesken.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] Mesken mesken)
+        // {
+        //     if (id != mesken.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var existing = await _meskenService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _meskenService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            Result<bool> result = await _meskenService.Update(existing.Data, mesken);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _meskenService.Update(existing.Data, mesken);
+        //     return Ok(result);
+        // }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
@@ -59,6 +59,14 @@ namespace BisiyonPanelAPI.Api
                 return NotFound();
 
             Result<bool> result = await _meskenService.Delete(id);
+            return Ok(result);
+        }
+        [HttpPost("GetAllMeskenByFilter")]
+        public async Task<IActionResult> GetAllMeskenByFilter(DataFilterModelView model)
+        {
+            var result = await _meskenService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
     }

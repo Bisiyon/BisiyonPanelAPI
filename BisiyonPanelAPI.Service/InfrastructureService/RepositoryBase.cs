@@ -1,15 +1,18 @@
+using System.Linq.Expressions;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
+using Castle.DynamicLinqQueryBuilder;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace BisiyonPanelAPI.Service
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class, IEntity
     {
-
         private readonly BisiyonAppContext _context;
+
         private DbSet<T> _dbSet;
 
         public RepositoryBase(BisiyonAppContext context)
@@ -34,7 +37,24 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
-
+        public async Task<Result<List<T>>> GetAllAsync(Expression<Func<T, bool>> predicate)
+        {
+            Result<List<T>> result = new();
+            try
+            {
+                var query = _dbSet.AsQueryable();
+                query = query.Where(predicate);
+                result.Data = await query.ToListAsync();
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
         public async Task<Result<T?>> GetByIdAsync(int id)
         {
             Result<T?> result = new();
@@ -114,6 +134,78 @@ namespace BisiyonPanelAPI.Service
                 result.Exception = ex;
                 result.State = ResultState.Fail;
                 result.Data = false;
+            }
+            return result;
+        }
+
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
+        {
+            Result<List<TDto>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+
+                if (model.FilterQuery != null)
+                {
+                    query = query.BuildQuery(model.FilterQuery);
+                }
+
+                if (!string.IsNullOrEmpty(model.OrderByField))
+                {
+                    query = model.OrderByIsAsc
+                        ? query.OrderBy(x => EF.Property<object>(x, model.OrderByField))
+                        : query.OrderByDescending(x => EF.Property<object>(x, model.OrderByField));
+                }
+
+                if (model.Page > 0 && model.PageSize > 0)
+                {
+                    query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
+                }
+                var data = await query.ToListAsync();
+                var dtoList = data.Adapt<List<TDto>>();
+                result.Data = dtoList;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+        public async Task<Result<List<T>>> GetAllAsync(DataFilterModelView model)
+        {
+            Result<List<T>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+
+                if (model.FilterQuery != null)
+                {
+                    query = query.BuildQuery(model.FilterQuery);
+                }
+
+                if (!string.IsNullOrEmpty(model.OrderByField))
+                {
+                    query = model.OrderByIsAsc
+                        ? query.OrderBy(x => EF.Property<object>(x, model.OrderByField))
+                        : query.OrderByDescending(x => EF.Property<object>(x, model.OrderByField));
+                }
+
+                if (model.Page > 0 && model.PageSize > 0)
+                {
+                    query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
+                }
+                var data = await query.ToListAsync();
+                result.Data = data;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
             }
             return result;
         }
