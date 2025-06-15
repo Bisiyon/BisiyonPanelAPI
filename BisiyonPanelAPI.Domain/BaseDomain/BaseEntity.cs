@@ -6,5 +6,10 @@ namespace BisiyonPanelAPI.Domain
     {
         [Timestamp]
         public byte[]? ConcurrencyToken { get; set; }
+        public bool IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
+        public int? DeletedBy { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public string DeletedNotes { get; set; }
     }
 }

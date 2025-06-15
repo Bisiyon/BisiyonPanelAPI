@@ -6,7 +6,7 @@ namespace BisiyonPanelAPI.Domain
     {
         [Key]
         public int Id { get; set; }
-        public string Adi { get; set; }
+        public string Ad { get; set; }
         public int? ToplamArsaPayi { get; set; }
         public bool SabiteDahilMi { get; set; }
         public int? ToplamMesken { get; set; }

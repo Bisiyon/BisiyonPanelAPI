@@ -4,8 +4,7 @@ using BisiyonPanelAPI.View;
 
 namespace BisiyonPanelAPI.Interface
 {
-    public interface IGorevliService : IServiceBase<Gorevli>
+    public interface IAidatGrupService : IServiceBase<AidatGrup>
     { 
-
     }
 }

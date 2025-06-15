@@ -1,6 +1,6 @@
 namespace BisiyonPanelAPI.Domain
 {
-    public enum UyeHareketTip
+    public enum Enum_UyeHareketTip
     {
         /// <summary>
         /// Yeni bir üyenin ilk kez taşınması

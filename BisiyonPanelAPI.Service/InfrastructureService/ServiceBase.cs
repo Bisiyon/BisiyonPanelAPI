@@ -17,6 +17,11 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetAllAsync();
         }
 
+        public async Task<Result<List<T>>> GetAllAsync(DataFilterModelView mode)
+        {
+            return await _unitOfWork.Repository<T>().GetAllAsync();
+        }
+
         public async Task<Result<T?>> GetByIdAsync(int id)
         {
             return await _unitOfWork.Repository<T>().GetByIdAsync(id);

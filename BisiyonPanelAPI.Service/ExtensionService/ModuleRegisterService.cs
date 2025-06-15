@@ -22,12 +22,13 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
                      builder.RegisterType<AidatService>().As<IAidatService>().InstancePerLifetimeScope();
                      builder.RegisterType<BlokService>().As<IBlokService>().InstancePerLifetimeScope();
-                     builder.RegisterType<GorevliService>().As<IGorevliService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenService>().As<IMeskenService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenTipiService>().As<IMeskenTipiService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeService>().As<IUyeService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeDurumTipService>().As<IUyeDurumTipService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeHareketService>().As<IUyeHareketService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AracService>().As<IAracService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AidatGrupService>().As<IAidatGrupService>().InstancePerLifetimeScope();
 
 
                      #endregion

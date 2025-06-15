@@ -9,6 +9,7 @@ namespace BisiyonPanelAPI.Domain
         public int Id { get; set; }
         public int BlokId { get; set; }
         public int? MeskenTipId { get; set; }
+        public int MalikHisse { get; set; } = 100;
         [StringLength(100)]
         public string Ad { get; set; }
         public int? Kat { get; set; }
@@ -24,16 +25,17 @@ namespace BisiyonPanelAPI.Domain
         public int Oran7 { get; set; } = 100;
         public int Oran8 { get; set; } = 100;
         public int Oran9 { get; set; } = 100;
-        public int? KisiSayisi { get; set; }
-        public int? OturanId { get; set; }
+        public int? KisiSayisi { get; set; } 
+        public int? AidatGrupId { get; set; } 
 
-        [ForeignKey("MeskenTipId")]
+        [ForeignKey(nameof(AidatGrupId))]
+        public AidatGrup AidatGrup { get; set; }
+
+        [ForeignKey(nameof(MeskenTipId))]
         public MeskenTipi MeskenTipi { get; set; }
 
-        [ForeignKey("BlokId")]
+        [ForeignKey(nameof(BlokId))]
         public Blok Blok { get; set; }
-
-        [ForeignKey("OturanId")]
-        public Uye Uye { get; set; }
+ 
     }
 }

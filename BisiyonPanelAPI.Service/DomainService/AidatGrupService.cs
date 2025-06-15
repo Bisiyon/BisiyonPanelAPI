@@ -10,11 +10,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BisiyonPanelAPI.Service
 {
-    public class AidatService : ServiceBase<Aidat>, IAidatService
+    public class AidatGrupService : ServiceBase<AidatGrup>, IAidatGrupService
     {
-        public AidatService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public AidatGrupService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
         }
 
+        
     }
 }

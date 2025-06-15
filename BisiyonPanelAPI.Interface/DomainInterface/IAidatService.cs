@@ -6,6 +6,5 @@ namespace BisiyonPanelAPI.Interface
 {
     public interface IAidatService : IServiceBase<Aidat>
     { 
-
     }
 }

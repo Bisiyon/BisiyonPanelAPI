@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.CommonObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -20,6 +21,7 @@ namespace BisiyonPanelAPI.Api
             var result = await _aidatService.GetAllAsync();
             return Ok(result);
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Aidat>> GetById(int id)

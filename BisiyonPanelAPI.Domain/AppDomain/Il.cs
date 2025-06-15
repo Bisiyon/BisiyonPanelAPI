@@ -2,15 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BisiyonPanelAPI.Domain
 {
-    public class MeskenTipi : BaseEntity, IEntity
+    public class Il : BaseEntity, IEntity
     {
         [Key]
         public int Id { get; set; }
- 
-        /// <summary>
-        /// Mesken, Ticari
-        /// </summary>
         [StringLength(50)]
-        public string Tip { get; set; }
+        public string Ad { get; set; } 
     }
 }
