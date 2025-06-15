@@ -44,4 +44,56 @@ namespace BisiyonPanelAPI.Common
         public Exception? Exception { get; set; }
         public bool IsSuccessfull { get { return State == ResultState.Successfull; } }
     }
+
+
+    public class PagedResult<T> : Result<T>, IPagedResult
+    {
+        public PagedResult()
+        {
+            ActivePage = 1;
+            PageSize = 30;
+
+        }
+        public int ActivePage { get; set; }
+        public int PageSize { get; set; }
+        public int PageCount
+        {
+            get
+            {
+                if (PageSize == 0)
+                {
+                    return 0;
+                }
+                double count = (double)TotalRowCount / (double)PageSize;
+                return (int)Math.Ceiling(count);
+            }
+
+        }
+        public long TotalRowCount { get; set; }
+        public string Title { get; set; }
+        public string Link { get; set; }
+        public string Query { get; set; }
+        public object[] Parameters { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
+        public int SecondDataPage { get; set; }
+        public int SecondDataPageCount { get; set; }
+    }
+
+    public interface IPagedResult
+    {
+        int ActivePage { get; set; }
+        int PageSize { get; set; }
+        int PageCount { get; }
+        long TotalRowCount { get; set; }
+        string Title { get; set; }
+        string Link { get; set; }
+        string Query { get; set; }
+        object[] Parameters { get; set; }
+        string Controller { get; set; }
+        string Action { get; set; }
+        int SecondDataPage { get; set; }
+        int SecondDataPageCount { get; set; }
+    }
+
 }

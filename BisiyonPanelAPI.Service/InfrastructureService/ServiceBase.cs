@@ -42,11 +42,11 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().Delete(id);
         }
 
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
+        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
         {
             return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(model);
         }
-        public async Task<Result<List<T>>> GetAllAsync(DataFilterModelView model)
+        public async Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model)
         {
             return await _unitOfWork.Repository<T>().GetAllAsync(model);
         }

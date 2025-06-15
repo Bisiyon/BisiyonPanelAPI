@@ -138,9 +138,9 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
+        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
         {
-            Result<List<TDto>> result = new();
+            PagedResult<List<TDto>> result = new();
             try
             {
                 IQueryable<T> query = _dbSet.AsQueryable();
@@ -162,6 +162,8 @@ namespace BisiyonPanelAPI.Service
                     query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
                 }
                 var data = await query.ToListAsync();
+                var count = await query.CountAsync();
+                result.TotalRowCount = count;
                 var dtoList = data.Adapt<List<TDto>>();
                 result.Data = dtoList;
                 result.State = ResultState.Successfull;
@@ -174,9 +176,9 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
-        public async Task<Result<List<T>>> GetAllAsync(DataFilterModelView model)
+        public async Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model)
         {
-            Result<List<T>> result = new();
+            PagedResult<List<T>> result = new();
             try
             {
                 IQueryable<T> query = _dbSet.AsQueryable();
@@ -198,6 +200,9 @@ namespace BisiyonPanelAPI.Service
                     query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
                 }
                 var data = await query.ToListAsync();
+                var count = await query.CountAsync();
+                result.TotalRowCount= count;
+
                 result.Data = data;
                 result.State = ResultState.Successfull;
             }
