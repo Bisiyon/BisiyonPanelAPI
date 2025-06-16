@@ -8,5 +8,6 @@ namespace BisiyonPanelAPI.Interface
     {
         List<KatDaireBilgisi> KatlariHesapla(int blokId);
         List<KatDaireBilgisi> HesaplaDaireNumaralari(List<KatDaireInput> katGirdileri);
+        Result<bool> MeskenleriOlustur(List<KatDaireBilgisi> katDaireBilgileri);
     }
 }

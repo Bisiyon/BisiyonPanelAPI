@@ -61,5 +61,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _uyeService.Delete(id);
             return Ok(result);
         }
+
+        [HttpPost("GetAllUyeByFilter")]
+        public async Task<IActionResult> GetAllUyeByFilter(DataFilterModelView model)
+        {
+            var result = await _uyeService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

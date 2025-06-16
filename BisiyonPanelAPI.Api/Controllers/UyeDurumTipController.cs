@@ -61,5 +61,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _uyeDurumTipService.Delete(id);
             return Ok(result);
         }
+
+        [HttpPost("GetAllUyeDurumTipByFilter")]
+        public async Task<IActionResult> GetAllUyeDurumTipByFilter(DataFilterModelView model)
+        {
+            var result = await _uyeDurumTipService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

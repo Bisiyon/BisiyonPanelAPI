@@ -61,5 +61,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _ilService.Delete(id);
             return Ok(result);
         }
+                
+        [HttpPost("GetAllIlByFilter")]
+        public async Task<IActionResult> GetAllIlByFilter(DataFilterModelView model)
+        {
+            var result = await _ilService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

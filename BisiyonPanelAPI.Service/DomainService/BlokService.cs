@@ -1,3 +1,5 @@
+using System.IO.Compression;
+using System.Reflection.Metadata.Ecma335;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
@@ -87,5 +89,65 @@ namespace BisiyonPanelAPI.Service
 
             return katBilgileri;
         }
+
+
+        public Result<bool> MeskenleriOlustur(List<KatDaireBilgisi> katDaireBilgileri)
+        {
+            Result<bool> result = new Result<bool>();
+            try
+            {
+                var meskenler = new List<Mesken>();
+                var blok = _mainContext.Blok.FirstOrDefault(f => f.Id == katDaireBilgileri.Select(s => s.BlokId).Distinct().First());
+
+                foreach (var satir in katDaireBilgileri)
+                {
+                    string blokAdi = blok.Ad;
+                    int? kat = KatStringToInt(satir.KatAdi);
+
+                    foreach (var daireNo in satir.DaireNumaralari)
+                    {
+                        var mesken = new Mesken
+                        {
+                            BlokId = satir.BlokId,
+                            Kat = kat,
+                            DaireNo = daireNo,
+                            Ad = $"{blokAdi} - K:{kat?.ToString("00")} - D:{daireNo.ToString("000")}",
+                            MeskenTipId = null,
+                            ArsaPayi = 1,
+                            M2 = 100,
+                            KisiSayisi = 1,
+                            AidatGrupId = null
+                        };
+                        _mainContext.Mesken.Add(mesken);
+                    }
+                }
+
+                result.State = ResultState.Successfull;
+                result.Message = "Meskenler oluşturuldu.";
+
+            }
+            catch (System.Exception)
+            {
+                result.State = ResultState.Fail;
+                result.Message = "Meskenler oluştururken hata ile karşılaşıldı.";
+            }
+
+            return result;
+        }
+
+        private int? KatStringToInt(string katAdi)
+        {
+            if (string.IsNullOrWhiteSpace(katAdi))
+                return null;
+
+            if (katAdi.Trim().ToLower() == "zemin")
+                return 0;
+
+            if (int.TryParse(katAdi, out int sonuc))
+                return sonuc;
+
+            return null;
+        }
+
     }
 }

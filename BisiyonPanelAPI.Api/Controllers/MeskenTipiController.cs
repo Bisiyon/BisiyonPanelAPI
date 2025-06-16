@@ -61,5 +61,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _meskenTipiService.Delete(id);
             return Ok(result);
         }
+        
+        [HttpPost("GetAllMeskenTipiByFilter")]
+        public async Task<IActionResult> GetAllMeskenTipiByFilter(DataFilterModelView model)
+        {
+            var result = await _meskenTipiService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

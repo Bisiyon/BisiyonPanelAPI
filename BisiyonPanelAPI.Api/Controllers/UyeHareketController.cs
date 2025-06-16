@@ -61,5 +61,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _uyeHareketService.Delete(id);
             return Ok(result);
         }
+
+        [HttpPost("GetAllUyeHareketByFilter")]
+        public async Task<IActionResult> GetAllUyeHareketByFilter(DataFilterModelView model)
+        {
+            var result = await _uyeHareketService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

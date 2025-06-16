@@ -61,6 +61,7 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _meskenService.Delete(id);
             return Ok(result);
         }
+        
         [HttpPost("GetAllMeskenByFilter")]
         public async Task<IActionResult> GetAllMeskenByFilter(DataFilterModelView model)
         {
@@ -69,5 +70,6 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
+
     }
 }

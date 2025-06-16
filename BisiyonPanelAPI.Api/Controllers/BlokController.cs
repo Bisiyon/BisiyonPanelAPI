@@ -39,28 +39,46 @@ namespace BisiyonPanelAPI.Api
             return CreatedAtAction(nameof(GetById), new { id = createdBlok.Data.Id }, createdBlok);
         }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
-        // {
-        //     if (id != blok.Id)
-        //         return BadRequest("ID eşleşmiyor.");
-           
-           /// TO DO Mesken varsa silemez 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
+        {
+            if (id != blok.Id)
+                return BadRequest("ID eşleşmiyor.");
+
+            var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == blok.Id);
+
+            if (hasMesken.Result.Data != null)
+            {
+                return BadRequest(new Result<bool>
+                {
+                    State = ResultState.Fail,
+                    Message = "Kayıtlı mesken kaydı bulunmaktadır. Güncelleme işlemi yapılamaz."
+                });
+            }
 
 
-        //     var existing = await _blokService.GetByIdAsync(id);
-        //     if (existing.Data == null)
-        //         return NotFound();
+            var existing = await _blokService.GetByIdAsync(id);
+            if (existing.Data == null)
+                return NotFound();
 
-        //     Result<bool> result = await _blokService.Update(existing.Data, blok);
-        //     return Ok(result);
-        // }
+            Result<bool> result = await _blokService.Update(existing.Data, blok);
+            return Ok(result);
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
+            var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == id);
 
-            /// TO DO Mesken varsa silemez 
+            if (hasMesken.Result.Data != null)
+            {
+                return BadRequest(new Result<bool>
+                {
+                    State = ResultState.Fail,
+                    Message = "Kayıtlı mesken kaydı bulunmaktadır. Silme işlemi yapılamaz."
+                });
+            }
+
             var existing = await _blokService.GetByIdAsync(id);
             if (existing == null)
                 return NotFound();
@@ -68,5 +86,24 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _blokService.Delete(id);
             return Ok(result);
         }
+
+        [HttpPost("GetAllBlokByFilter")]
+        public async Task<IActionResult> GetAllBlokByFilter(DataFilterModelView model)
+        {
+            var result = await _blokService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
+
+        [HttpGet("KatlariHesapla/{blokId}")]
+        public IActionResult KatlariHesapla(int blokId)
+        {
+            return Ok(_blokService.KatlariHesapla(blokId));
+        }
+
+
+ 
+
     }
 }

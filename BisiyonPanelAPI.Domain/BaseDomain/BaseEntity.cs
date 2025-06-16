@@ -10,6 +10,6 @@ namespace BisiyonPanelAPI.Domain
         public bool? IsDeleted { get; set; }
         public int? DeletedBy { get; set; }
         public DateTime? DeletedDate { get; set; }
-        public string DeletedNotes { get; set; }
+        public string? DeletedNotes { get; set; }
     }
 }

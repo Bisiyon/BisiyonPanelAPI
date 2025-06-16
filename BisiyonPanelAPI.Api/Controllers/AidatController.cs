@@ -63,5 +63,14 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _aidatService.Delete(id);
             return Ok(result);
         }
+        
+        [HttpPost("GetAllAidatByFilter")]
+        public async Task<IActionResult> GetAllAidatByFilter(DataFilterModelView model)
+        {
+            var result = await _aidatService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

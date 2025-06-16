@@ -63,5 +63,14 @@ namespace BisiyonPanelAPI.Api
             await _aracService.Delete(id);
             return NoContent();
         }
+
+        [HttpPost("GetAllAracByFilter")]
+        public async Task<IActionResult> GetAllAracByFilter(DataFilterModelView model)
+        {
+            var result = await _aracService.GetAllAsync(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }
