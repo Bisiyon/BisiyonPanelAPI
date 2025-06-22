@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -61,12 +62,30 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _meskenService.Delete(id);
             return Ok(result);
         }
-        
+
         [HttpPost("GetAllMeskenByFilter")]
         public async Task<IActionResult> GetAllMeskenByFilter(DataFilterModelView model)
         {
             var result = await _meskenService.GetAllAsync(model);
             if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
+        [HttpPost("GetAllMeskenByDto")]
+        public async Task<IActionResult> GetAllMeskenByDto()
+        {
+            var result = await _meskenService.GetAllAsync<MeskenBo>();
+
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
+        [HttpPost("GetAllMeskenByIdDto")]
+        public async Task<IActionResult> GetAllMeskenByIdDto()
+        {
+            var result = await _meskenService.GetByIdAsync<MeskenBo>(10);
+
+            if (result.Data == null)
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }

@@ -50,5 +50,30 @@ namespace BisiyonPanelAPI.Service
         {
             return await _unitOfWork.Repository<T>().GetAllAsync(model);
         }
+
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate)
+        {
+            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(predicate);
+        }
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
+        {
+            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>();
+        }
+
+        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id)
+        {
+            return await _unitOfWork.Repository<T>().GetByIdAsync<TDto>(id);
+
+        }
+
+        public async Task<Result<TDto>> Insert<TDto>(TDto entity)
+        {
+            return await _unitOfWork.Repository<T>().Insert<TDto>(entity);
+        }
+
+        public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)
+        {
+            return await _unitOfWork.Repository<T>().Update<TDto>(newEntity, oldEntity);
+        }
     }
 }

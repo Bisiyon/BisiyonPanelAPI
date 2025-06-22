@@ -201,7 +201,7 @@ namespace BisiyonPanelAPI.Service
                 }
                 var data = await query.ToListAsync();
                 var count = await query.CountAsync();
-                result.TotalRowCount= count;
+                result.TotalRowCount = count;
 
                 result.Data = data;
                 result.State = ResultState.Successfull;
@@ -214,5 +214,112 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
+
+
+        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id)
+        {
+            Result<TDto?> result = new();
+            try
+            {
+                var data = await _dbSet.FindAsync(id);
+                var dtoData = data.Adapt<TDto>();
+                result.Data = dtoData;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+
+
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate)
+        {
+            Result<List<TDto>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+                if (predicate != null) query = query.Where(predicate);
+                var data = await query.ToListAsync();
+                var dtoList = data.Adapt<List<TDto>>();
+                result.Data = dtoList;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+        public async Task<Result<TDto>> Insert<TDto>(TDto entity)
+        {
+            Result<TDto> result = new();
+            try
+            {
+                var entityToInsert = entity.Adapt<T>();
+                await _dbSet.AddAsync(entityToInsert);
+                int rst = await _context.SaveChangesAsync();
+                result.Data = entity;
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+
+        public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)
+        {
+            Result<bool> result = new();
+            try
+            {
+                var oldEntityToUpdate = oldEntity.Adapt<T>();
+                var newEntityToUpdate = newEntity.Adapt<T>();
+                _context.Entry(oldEntityToUpdate).CurrentValues.SetValues(newEntityToUpdate);
+                int rst = await _context.SaveChangesAsync();
+                result.Data = rst > 0;
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+                result.Data = false;
+            }
+            return result;
+        }
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
+        {
+            Result<List<TDto>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+                var data = await query.ToListAsync();
+                var dtoList = data.Adapt<List<TDto>>();
+                result.Data = dtoList;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+        
     }
 }
