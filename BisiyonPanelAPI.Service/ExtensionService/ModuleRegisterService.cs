@@ -32,6 +32,7 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<UyeService>().As<IUyeService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeDurumTipService>().As<IUyeDurumTipService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeHareketService>().As<IUyeHareketService>().InstancePerLifetimeScope();
+                     builder.RegisterType<DemirbasService>().As<IDemirbasService>().InstancePerLifetimeScope();
 
                      #endregion
 

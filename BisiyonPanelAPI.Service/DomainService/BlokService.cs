@@ -12,16 +12,16 @@ namespace BisiyonPanelAPI.Service
 {
     public class BlokService : ServiceBase<Blok>, IBlokService
     {
-        private readonly BisiyonMainContext _mainContext;
-        public BlokService(IUnitOfWork unitOfWork, BisiyonMainContext mainContext) : base(unitOfWork)
+        private readonly BisiyonAppContext _appContext;
+        public BlokService(IUnitOfWork unitOfWork, BisiyonAppContext appContext) : base(unitOfWork)
         {
-            _mainContext = mainContext;
+            _appContext = appContext;
         }
 
 
         public List<KatDaireBilgisi> KatlariHesapla(int blokId)
         {
-            var entity = _mainContext.Blok.FirstOrDefault(x => x.Id == blokId);
+            var entity = _appContext.Blok.FirstOrDefault(x => x.Id == blokId);
 
             if (entity == null)
                 return new List<KatDaireBilgisi>();
@@ -30,7 +30,7 @@ namespace BisiyonPanelAPI.Service
             int daireNo = 1;
             int kalanDaire = entity.ToplamDaireSayisi;
 
-            var tip = _mainContext.MeskenTipi.FirstOrDefault(x => x.Id == entity.BlokTipId);
+            var tip = _appContext.MeskenTipi.FirstOrDefault(x => x.Id == entity.BlokTipId);
 
             for (int i = 0; i < entity.ToplamKatSayisi && kalanDaire > 0; i++)
             {
@@ -97,7 +97,7 @@ namespace BisiyonPanelAPI.Service
             try
             {
                 var meskenler = new List<Mesken>();
-                var blok = _mainContext.Blok.FirstOrDefault(f => f.Id == katDaireBilgileri.Select(s => s.BlokId).Distinct().First());
+                var blok = _appContext.Blok.FirstOrDefault(f => f.Id == katDaireBilgileri.Select(s => s.BlokId).Distinct().First());
 
                 foreach (var satir in katDaireBilgileri)
                 {
@@ -118,7 +118,7 @@ namespace BisiyonPanelAPI.Service
                             KisiSayisi = 1,
                             AidatGrupId = null
                         };
-                        _mainContext.Mesken.Add(mesken);
+                        _appContext.Mesken.Add(mesken);
                     }
                 }
 
