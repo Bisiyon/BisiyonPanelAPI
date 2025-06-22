@@ -7,11 +7,11 @@ namespace BisiyonPanelAPI.Domain
     {
         [Key]
         public int Id { get; set; }
-        public string Adi { get; set; }
+        public string Ad { get; set; }
         public int Miktar { get; set; }
         public string Turu { get; set; }
         public string Satici { get; set; }
-        public string Serino { get; set; }
+        public string SeriNo { get; set; }
         public DateTime AlimTarihi { get; set; }
         public string FaturaNo { get; set; }
         public decimal Fiyat { get; set; }
