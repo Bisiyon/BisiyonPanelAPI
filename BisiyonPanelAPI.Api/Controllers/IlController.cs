@@ -2,6 +2,8 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View.UserView;
+using Mapster;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -31,14 +33,14 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPost]
-        public async Task<ActionResult<Il>> Create([FromBody] Il il)
+        public async Task<ActionResult<Il>> Create([FromBody] IlView il)
         {
             var createdIl = await _ilService.Insert(il);
             return CreatedAtAction(nameof(GetById), new { id = createdIl.Data.Id }, createdIl);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Il il)
+        public async Task<IActionResult> Update(int id, [FromBody] IlView il)
         {
             if (id != il.Id)
                 return BadRequest("ID eşleşmiyor.");
@@ -47,7 +49,9 @@ namespace BisiyonPanelAPI.Api
             if (existing.Data == null)
                 return NotFound();
 
-            Result<bool> result = await _ilService.Update(existing.Data, il);
+            var oldEntity = existing.Data.Adapt<IlView>();
+
+            Result<bool> result = await _ilService.Update<IlView>(oldEntity, il);
             return Ok(result);
         }
 
@@ -61,7 +65,7 @@ namespace BisiyonPanelAPI.Api
             Result<bool> result = await _ilService.Delete(id);
             return Ok(result);
         }
-                
+
         [HttpPost("GetAllIlByFilter")]
         public async Task<IActionResult> GetAllIlByFilter(DataFilterModelView model)
         {
