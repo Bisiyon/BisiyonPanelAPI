@@ -237,12 +237,14 @@ namespace BisiyonPanelAPI.Service
 
 
 
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate)
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
             Result<List<TDto>> result = new();
             try
             {
                 IQueryable<T> query = _dbSet.AsQueryable();
+                if (includeFunc != null)
+                query = includeFunc(query);
                 if (predicate != null) query = query.Where(predicate);
                 var data = await query.ToListAsync();
                 var dtoList = data.Adapt<List<TDto>>();

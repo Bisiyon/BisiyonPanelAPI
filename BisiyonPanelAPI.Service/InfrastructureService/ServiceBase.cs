@@ -51,9 +51,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetAllAsync(model);
         }
 
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate)
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(predicate);
+            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(predicate,includeFunc);
         }
         public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
         {

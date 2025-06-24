@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.View.BussinesObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -74,7 +75,9 @@ namespace BisiyonPanelAPI.Api
         [HttpPost("GetAllMeskenByDto")]
         public async Task<IActionResult> GetAllMeskenByDto()
         {
-            var result = await _meskenService.GetAllAsync<MeskenBo>();
+            var result = await _meskenService.GetAllAsync<MeskenBo>(x => x.Id > 0, includeFunc: q => q
+                .Include(y => y.AidatGrup)
+                .Include(y => y.MeskenTipi));
 
             if (result.Data == null || !result.Data.Any())
                 return NotFound("No records found matching the filter criteria.");
