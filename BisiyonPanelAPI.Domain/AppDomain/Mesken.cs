@@ -25,8 +25,9 @@ namespace BisiyonPanelAPI.Domain
         public int Oran7 { get; set; } = 100;
         public int Oran8 { get; set; } = 100;
         public int Oran9 { get; set; } = 100;
-        public int? KisiSayisi { get; set; } 
-        public int? AidatGrupId { get; set; } 
+        public int? KisiSayisi { get; set; }
+        public int? AidatGrupId { get; set; }
+        public int? KatSayisi { get; set; }
 
         [ForeignKey(nameof(AidatGrupId))]
         public AidatGrup AidatGrup { get; set; }
