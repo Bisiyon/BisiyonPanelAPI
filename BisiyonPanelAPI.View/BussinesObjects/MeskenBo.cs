@@ -125,9 +125,7 @@ namespace BisiyonPanelAPI.View.BussinesObjects
         {
             get => _AidatGrupId;
             set { _AidatGrupId = value; }
-        }
-        public AidatGrupBo AidatGrup { get; set; }
-        public MeskenTipiBo MeskenTipi { get; set; }
+        } 
 
     }
 }
