@@ -42,7 +42,6 @@ namespace BisiyonPanelAPI.Api
         {
             if (id != ilce.Id)
                 return BadRequest("ID eşleşmiyor.");
-
             var existing = await _ilceService.GetByIdAsync(id);
             if (existing.Data == null)
                 return NotFound();

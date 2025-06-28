@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250628141827_PersonelAdd")]
+    partial class PersonelAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -612,10 +615,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Adres")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CepTelefonu")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -664,9 +663,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.Property<DateTime?>("IstenCikisTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PersonelTipId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SicilNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -679,52 +675,16 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UyeDurumTipId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IlId");
 
                     b.HasIndex("IlceId");
 
-                    b.HasIndex("PersonelTipId");
-
                     b.ToTable("Personel");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.PersonelTip", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("ROWVERSION");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Tip")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PersonelTip");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Role", b =>
@@ -1234,17 +1194,9 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BisiyonPanelAPI.Domain.PersonelTip", "PersonelTip")
-                        .WithMany()
-                        .HasForeignKey("PersonelTipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Il");
 
                     b.Navigation("Ilce");
-
-                    b.Navigation("PersonelTip");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Uye", b =>
