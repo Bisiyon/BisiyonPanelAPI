@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Mapster;
 
 namespace BisiyonPanelAPI.View.BussinesObjects
 {
@@ -30,24 +31,14 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             set { _MalikHisse = value; }
         }
         [StringLength(100)]
-        private string _Ad;
-        public string Ad
+         [AdaptMember("Ad")]
+        private string _BuPropIsimPropu;
+        public string BuPropIsimPropu
         {
-            get => _Ad;
-            set { _Ad = value; }
+            get => _BuPropIsimPropu;
+            set { _BuPropIsimPropu = value; }
         }
-        private int? _Kat;
-        public int? Kat
-        {
-            get => _Kat;
-            set { _Kat = value; }
-        }
-        private int? _DaireNo;
-        public int? DaireNo
-        {
-            get => _DaireNo;
-            set { _DaireNo = value; }
-        }
+    
         private int? _M2;
         public int? M2
         {
@@ -59,60 +50,6 @@ namespace BisiyonPanelAPI.View.BussinesObjects
         {
             get => _ArsaPayi;
             set { _ArsaPayi = value; }
-        }
-        private int _Oran1 = 100;
-        public int Oran1
-        {
-            get => _Oran1;
-            set { _Oran1 = value; }
-        }
-        private int _Oran2 = 100;
-        public int Oran2
-        {
-            get => _Oran2;
-            set { _Oran2 = value; }
-        }
-        private int _Oran3 = 100;
-        public int Oran3
-        {
-            get => _Oran3;
-            set { _Oran3 = value; }
-        }
-        private int _Oran4 = 100;
-        public int Oran4
-        {
-            get => _Oran4;
-            set { _Oran4 = value; }
-        }
-        private int _Oran5 = 100;
-        public int Oran5
-        {
-            get => _Oran5;
-            set { _Oran5 = value; }
-        }
-        private int _Oran6 = 100;
-        public int Oran6
-        {
-            get => _Oran6;
-            set { _Oran6 = value; }
-        }
-        private int _Oran7 = 100;
-        public int Oran7
-        {
-            get => _Oran7;
-            set { _Oran7 = value; }
-        }
-        private int _Oran8 = 100;
-        public int Oran8
-        {
-            get => _Oran8;
-            set { _Oran8 = value; }
-        }
-        private int _Oran9 = 100;
-        public int Oran9
-        {
-            get => _Oran9;
-            set { _Oran9 = value; }
         }
         private int? _KisiSayisi;
         public int? KisiSayisi

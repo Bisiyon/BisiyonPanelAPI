@@ -246,8 +246,7 @@ namespace BisiyonPanelAPI.Service
                 if (includeFunc != null)
                 query = includeFunc(query);
                 if (predicate != null) query = query.Where(predicate);
-                var data = await query.ToListAsync();
-                var dtoList = data.Adapt<List<TDto>>();
+                var dtoList = await query.ProjectToType<TDto>().ToListAsync();
                 result.Data = dtoList;
                 result.State = ResultState.Successfull;
             }
