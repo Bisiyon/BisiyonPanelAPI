@@ -1,10 +1,9 @@
 using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
-using BisiyonPanelAPI.Common;
-using BisiyonPanelAPI.CommonObjects;
-using BisiyonPanelAPI.View.UserView;
+using BisiyonPanelAPI.Common; 
 using Mapster;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -35,14 +34,14 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPost]
-        public async Task<ActionResult<Aidat>> Create([FromBody] AidatView aidat)
+        public async Task<ActionResult<Aidat>> Create([FromBody] AidatBo aidat)
         {
             var createdAidat = await _aidatService.Insert(aidat);
             return CreatedAtAction(nameof(GetById), new { id = createdAidat.Data.Id }, createdAidat);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] AidatView aidat)
+        public async Task<IActionResult> Update(int id, [FromBody] AidatBo aidat)
         {
             if (id != aidat.Id)
                 return BadRequest("ID eşleşmiyor.");
@@ -51,10 +50,10 @@ namespace BisiyonPanelAPI.Api
             if (existing.Data == null)
                 return NotFound();
 
-            var oldEntity = existing.Data.Adapt<AidatView>();
+            var oldEntity = existing.Data.Adapt<AidatBo>();
 
 
-            Result<bool> result = await _aidatService.Update<AidatView>(oldEntity, aidat);
+            Result<bool> result = await _aidatService.Update<AidatBo>(oldEntity, aidat);
             return Ok(result);
         }
 

@@ -1,9 +1,9 @@
 using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
-using BisiyonPanelAPI.Common;
-using BisiyonPanelAPI.View.UserView;
+using BisiyonPanelAPI.Common; 
 using Mapster;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -33,14 +33,14 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPost]
-        public async Task<ActionResult<Il>> Create([FromBody] IlView il)
+        public async Task<ActionResult<Il>> Create([FromBody] IlBo il)
         {
             var createdIl = await _ilService.Insert(il);
             return CreatedAtAction(nameof(GetById), new { id = createdIl.Data.Id }, createdIl);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] IlView il)
+        public async Task<IActionResult> Update(int id, [FromBody] IlBo il)
         {
             if (id != il.Id)
                 return BadRequest("ID eşleşmiyor.");
@@ -49,9 +49,9 @@ namespace BisiyonPanelAPI.Api
             if (existing.Data == null)
                 return NotFound();
 
-            var oldEntity = existing.Data.Adapt<IlView>();
+            var oldEntity = existing.Data.Adapt<IlBo>();
 
-            Result<bool> result = await _ilService.Update<IlView>(oldEntity, il);
+            Result<bool> result = await _ilService.Update<IlBo>(oldEntity, il);
             return Ok(result);
         }
 

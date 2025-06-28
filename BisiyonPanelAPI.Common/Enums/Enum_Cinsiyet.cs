@@ -1,4 +1,4 @@
-namespace BisiyonPanelAPI.Domain
+namespace BisiyonPanelAPI.Common
 {
     public enum Enum_Cinsiyet
     {
