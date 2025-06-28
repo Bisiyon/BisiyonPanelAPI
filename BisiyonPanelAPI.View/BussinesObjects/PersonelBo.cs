@@ -121,27 +121,6 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             set { _Adres = value; }
         }
 
-        // Eğer il, ilçe ve personel tip bilgileri DTO içinde gösterilmek isteniyorsa:
-        private string _IlAdi;
-        public string IlAdi
-        {
-            get => _IlAdi;
-            set { _IlAdi = value; }
-        }
-
-        private string _IlceAdi;
-        public string IlceAdi
-        {
-            get => _IlceAdi;
-            set { _IlceAdi = value; }
-        }
-
-        private string _PersonelTipAdi;
-        public string PersonelTipAdi
-        {
-            get => _PersonelTipAdi;
-            set { _PersonelTipAdi = value; }
-        }
 
     }
 }

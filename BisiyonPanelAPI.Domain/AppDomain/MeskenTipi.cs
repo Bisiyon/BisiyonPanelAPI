@@ -12,6 +12,9 @@ namespace BisiyonPanelAPI.Domain
 
         [StringLength(3)]
         public string Kod { get; set; }
+
+        [StringLength(12)]
+        public string DataKey { get; set; }
         public string Renk { get; set; }
     }
 }
