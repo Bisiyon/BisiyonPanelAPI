@@ -1,9 +1,12 @@
 using System.IO.Compression;
 using System.Reflection.Metadata.Ecma335;
+using System.Threading.Tasks;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
+using BisiyonPanelAPI.View;
+using BisiyonPanelAPI.View.BussinesObjects;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +15,17 @@ namespace BisiyonPanelAPI.Service
 {
     public class BlokService : ServiceBase<Blok>, IBlokService
     {
+        private readonly IServiceBase<Blok> Current;
+        private readonly IMeskenService _meskenService;
         private readonly BisiyonAppContext _appContext;
-        public BlokService(IUnitOfWork unitOfWork, BisiyonAppContext appContext) : base(unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public BlokService(IUnitOfWork unitOfWork, BisiyonAppContext appContext, IServiceBase<Blok> Current, IMeskenService meskenService) : base(unitOfWork)
         {
+            this.Current = Current;
             _appContext = appContext;
+            _meskenService = meskenService;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -149,5 +159,22 @@ namespace BisiyonPanelAPI.Service
             return null;
         }
 
+        public async Task<Result<BlokBo>> CreateBlokWithMesken(CreateNewBlokWithMeskenRequestDto dto)
+        {
+            var result = new Result<BlokBo>() { State = ResultState.Fail };
+            var blokEntity = await _unitOfWork.Repository<Blok>().Insert<BlokBo>(dto.Blok);
+            if (!blokEntity.IsSuccessfull || blokEntity.Data == null) return blokEntity;
+            foreach (var mesken in dto.Meskens)
+            {
+                mesken.BlokId = blokEntity.Data.Id;
+            }
+            var addBloksMesken =await _unitOfWork.Repository<Mesken>().BulkInsert<MeskenBo>(dto.Meskens);
+            if (addBloksMesken.IsSuccessfull)
+            {
+                result.State = ResultState.Successfull;
+                result.Data = blokEntity.Data; // Artık blokEntity.Id dolu
+            }
+            return result;
+        }
     }
 }

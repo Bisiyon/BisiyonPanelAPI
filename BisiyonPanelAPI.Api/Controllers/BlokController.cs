@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -101,6 +102,17 @@ namespace BisiyonPanelAPI.Api
         {
             return Ok(_blokService.KatlariHesapla(blokId));
         }
+
+        [HttpPost("CreateNewBlokWithMesken")]
+        public async Task<IActionResult> CreateNewBlokWithMesken([FromBody]CreateNewBlokWithMeskenRequestDto dto)
+        {
+            var result = await _blokService.CreateBlokWithMesken(dto);
+            if (result.Data == null)
+                return NotFound("Data is null");
+            return Ok(result);
+        }
+
+
 
 
  

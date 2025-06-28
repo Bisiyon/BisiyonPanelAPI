@@ -70,7 +70,11 @@ namespace BisiyonPanelAPI.Service
         {
             return await _unitOfWork.Repository<T>().Insert<TDto>(entity);
         }
-
+        public async Task<Result<List<TDto>>> BulkInsert<TDto>(List<TDto> entity)
+        {
+            return await _unitOfWork.Repository<T>().BulkInsert<TDto>(entity);
+        }
+        
         public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)
         {
             return await _unitOfWork.Repository<T>().Update<TDto>(newEntity, oldEntity);

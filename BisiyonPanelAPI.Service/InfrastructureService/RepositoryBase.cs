@@ -267,7 +267,7 @@ namespace BisiyonPanelAPI.Service
                 var entityToInsert = entity.Adapt<T>();
                 await _dbSet.AddAsync(entityToInsert);
                 int rst = await _context.SaveChangesAsync();
-                result.Data = entity;
+                result.Data = entityToInsert.Adapt<TDto>();
                 result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
             }
             catch (System.Exception ex)
@@ -278,6 +278,26 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
+        public async Task<Result<List<TDto>>> BulkInsert<TDto>(List<TDto> entity)
+        {
+            Result<List<TDto>> result = new ();
+            try
+            {
+                var entityToInsert = entity.Adapt<List<T>>();
+                await _dbSet.AddRangeAsync(entityToInsert);
+                int rst = await _context.SaveChangesAsync();
+                result.Data = entityToInsert.Adapt<List<TDto>>();
+                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
 
 
         public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)

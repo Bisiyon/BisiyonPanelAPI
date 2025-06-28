@@ -1,6 +1,7 @@
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.View;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Interface
 {
@@ -9,5 +10,6 @@ namespace BisiyonPanelAPI.Interface
         List<KatDaireBilgisi> KatlariHesapla(int blokId);
         List<KatDaireBilgisi> HesaplaDaireNumaralari(List<KatDaireInput> katGirdileri);
         Result<bool> MeskenleriOlustur(List<KatDaireBilgisi> katDaireBilgileri);
+        Task<Result<BlokBo>> CreateBlokWithMesken(CreateNewBlokWithMeskenRequestDto dto);
     }
 }

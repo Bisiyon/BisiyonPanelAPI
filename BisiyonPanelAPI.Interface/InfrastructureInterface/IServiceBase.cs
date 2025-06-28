@@ -19,6 +19,7 @@ namespace BisiyonPanelAPI.Interface
 
         Task<Result<TDto?>> GetByIdAsync<TDto>(int id);
         Task<Result<TDto>> Insert<TDto>(TDto entity);
+        Task<Result<List<TDto>>> BulkInsert<TDto>(List<TDto> entity);
         Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity);
     }
 }

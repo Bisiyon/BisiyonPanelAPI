@@ -1,6 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Mapster;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 
 namespace BisiyonPanelAPI.View.BussinesObjects
 {
@@ -63,8 +66,9 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             get => _AidatGrupId;
             set { _AidatGrupId = value; }
         } 
-
+        [ValidateNever]
         public AidatGrupBo AidatGrup { get; set; }
+        [ValidateNever]
         public MeskenTipiBo MeskenTipi { get; set; }
 
     }
