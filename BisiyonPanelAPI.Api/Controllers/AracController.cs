@@ -36,12 +36,12 @@ namespace BisiyonPanelAPI.Api
             return Ok(Arac);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Arac>> Create([FromBody] Arac Arac)
-        {
-            var createdArac = await _aracService.Insert(Arac);
-            return CreatedAtAction(nameof(GetById), new { id = createdArac.Data.Id }, createdArac);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Arac>> Create([FromBody] Arac Arac)
+        // {
+        //     var createdArac = await _aracService.Insert(Arac);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdArac.Data.Id }, createdArac);
+        // }
 
         // [HttpPut("{id}")]
         // public async Task<IActionResult> Update(int id, [FromBody] Arac arac)

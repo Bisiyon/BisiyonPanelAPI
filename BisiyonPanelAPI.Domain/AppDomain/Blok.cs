@@ -31,5 +31,8 @@ namespace BisiyonPanelAPI.Domain
 
         [ForeignKey(nameof(BlokTipId))]
         public MeskenTipi MeskenTipi { get; set; }
+        public ICollection<Mesken> Meskens { get; set; } = new List<Mesken>();
+
+
     }
 }

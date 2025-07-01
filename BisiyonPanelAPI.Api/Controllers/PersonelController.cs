@@ -32,39 +32,39 @@ namespace BisiyonPanelAPI.Api
             return Ok(personel);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Personel>> Create([FromBody] PersonelBo personel)
-        {
-            var createdPersonel = await _personelService.Insert(personel);
-            return CreatedAtAction(nameof(GetById), new { id = createdPersonel.Data.Id }, createdPersonel);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Personel>> Create([FromBody] PersonelBo personel)
+        // {
+        //     var createdPersonel = await _personelService.Insert(personel);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdPersonel.Data.Id }, createdPersonel);
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] PersonelBo personel)
-        {
-            if (id != personel.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] PersonelBo personel)
+        // {
+        //     if (id != personel.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var existing = await _personelService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _personelService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            var oldEntity = existing.Data.Adapt<PersonelBo>();
+        //     var oldEntity = existing.Data.Adapt<PersonelBo>();
 
-            Result<bool> result = await _personelService.Update<PersonelBo>(oldEntity, personel);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _personelService.Update<PersonelBo>(oldEntity, personel);
+        //     return Ok(result);
+        // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existing = await _personelService.GetByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var existing = await _personelService.GetByIdAsync(id);
+        //     if (existing == null)
+        //         return NotFound();
 
-            Result<bool> result = await _personelService.Delete(id);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _personelService.Delete(id);
+        //     return Ok(result);
+        // }
 
         [HttpPost("GetAllPersonelByFilter")]
         public async Task<IActionResult> GetAllPersonelByFilter(DataFilterModelView model)

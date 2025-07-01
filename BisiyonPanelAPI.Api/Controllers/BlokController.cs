@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.View;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -37,56 +38,56 @@ namespace BisiyonPanelAPI.Api
         public async Task<ActionResult<Blok>> Create([FromBody] Blok blok)
         {
             var createdBlok = await _blokService.Insert(blok);
-            return CreatedAtAction(nameof(GetById), new { id = createdBlok.Data.Id }, createdBlok);
+            return CreatedAtAction(nameof(GetById), new { id = createdBlok.Id }, createdBlok);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
-        {
-            if (id != blok.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] Blok blok)
+        // {
+        //     if (id != blok.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == blok.Id);
+        //     var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == blok.Id);
 
-            if (hasMesken.Result.Data != null)
-            {
-                return BadRequest(new Result<bool>
-                {
-                    State = ResultState.Fail,
-                    Message = "Kayıtlı mesken kaydı bulunmaktadır. Güncelleme işlemi yapılamaz."
-                });
-            }
+        //     if (hasMesken.Result.Data != null)
+        //     {
+        //         return BadRequest(new Result<bool>
+        //         {
+        //             State = ResultState.Fail,
+        //             Message = "Kayıtlı mesken kaydı bulunmaktadır. Güncelleme işlemi yapılamaz."
+        //         });
+        //     }
 
 
-            var existing = await _blokService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _blokService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            Result<bool> result = await _blokService.Update(existing.Data, blok);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _blokService.Update(existing.Data blok);
+        //     return Ok(result);
+        // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == id);
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var hasMesken = _meskenService.GetAllAsync(g => g.BlokId == id);
 
-            if (hasMesken.Result.Data != null)
-            {
-                return BadRequest(new Result<bool>
-                {
-                    State = ResultState.Fail,
-                    Message = "Kayıtlı mesken kaydı bulunmaktadır. Silme işlemi yapılamaz."
-                });
-            }
+        //     if (hasMesken.Result.Data != null)
+        //     {
+        //         return BadRequest(new Result<bool>
+        //         {
+        //             State = ResultState.Fail,
+        //             Message = "Kayıtlı mesken kaydı bulunmaktadır. Silme işlemi yapılamaz."
+        //         });
+        //     }
 
-            var existing = await _blokService.GetByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+        //     var existing = await _blokService.GetByIdAsync(id);
+        //     if (existing == null)
+        //         return NotFound();
 
-            Result<bool> result = await _blokService.Delete(id);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _blokService.Delete(id);
+        //     return Ok(result);
+        // }
 
         [HttpPost("GetAllBlokByFilter")]
         public async Task<IActionResult> GetAllBlokByFilter(DataFilterModelView model)
@@ -104,7 +105,7 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPost("CreateNewBlokWithMesken")]
-        public async Task<IActionResult> CreateNewBlokWithMesken([FromBody]CreateNewBlokWithMeskenRequestDto dto)
+        public async Task<IActionResult> CreateNewBlokWithMesken([FromBody] CreateNewBlokWithMeskenRequestDto dto)
         {
             var result = await _blokService.CreateBlokWithMesken(dto);
             if (result.Data == null)

@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250701214018_NavigationAdded")]
+    partial class NavigationAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,50 +164,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.ToTable("Arac");
                 });
 
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.AracHareket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AracHereketTipId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AracId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("ROWVERSION");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AracId");
-
-                    b.ToTable("AracHareket");
-                });
-
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Blok", b =>
                 {
                     b.Property<int>("Id")
@@ -329,10 +288,10 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.Property<decimal>("Fiyat")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("GarantiBaslangicTarihi")
+                    b.Property<DateTime>("GarantiBaslangicTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("GarantiBitisTarihi")
+                    b.Property<DateTime>("GarantiBitisTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -365,133 +324,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Demirbas");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.Firma", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("AcilisBakiyesi")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Ad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("AylikUcret")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Banka")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CepTelefonu")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CepTelefonu2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CepTelefonu3")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CepTelefonu4")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("ROWVERSION");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DogumTarihi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email3")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email4")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HesapKodu")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Iban")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IlId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IlceId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Soyad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TCKimlikNo")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Unvan")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VergiKimlikNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IlId");
-
-                    b.HasIndex("IlceId");
-
-                    b.ToTable("Firma");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Il", b =>
@@ -864,100 +696,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.HasIndex("PersonelTipId");
 
                     b.ToTable("Personel");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.PersonelGorev", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Adres")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("ROWVERSION");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PersonelGorev");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.PersonelGorevHareket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<byte[]>("ConcurrencyToken")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("ROWVERSION");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeletedNotes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GorevHareketTip")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("PersonelGorevId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonelId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonelGorevId");
-
-                    b.HasIndex("PersonelId");
-
-                    b.ToTable("PersonelGorevHareket");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.PersonelTip", b =>
@@ -1408,17 +1146,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.Navigation("Uye");
                 });
 
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.AracHareket", b =>
-                {
-                    b.HasOne("BisiyonPanelAPI.Domain.Arac", "Arac")
-                        .WithMany()
-                        .HasForeignKey("AracId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Arac");
-                });
-
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Blok", b =>
                 {
                     b.HasOne("BisiyonPanelAPI.Domain.MeskenTipi", "MeskenTipi")
@@ -1444,25 +1171,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.Navigation("Ilce");
 
                     b.Navigation("MeskenTipi");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.Firma", b =>
-                {
-                    b.HasOne("BisiyonPanelAPI.Domain.Il", "Il")
-                        .WithMany()
-                        .HasForeignKey("IlId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BisiyonPanelAPI.Domain.Ilce", "Ilce")
-                        .WithMany()
-                        .HasForeignKey("IlceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Il");
-
-                    b.Navigation("Ilce");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Ilce", b =>
@@ -1545,25 +1253,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                     b.Navigation("Ilce");
 
                     b.Navigation("PersonelTip");
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.PersonelGorevHareket", b =>
-                {
-                    b.HasOne("BisiyonPanelAPI.Domain.PersonelGorev", "PersonelGorev")
-                        .WithMany()
-                        .HasForeignKey("PersonelGorevId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BisiyonPanelAPI.Domain.Personel", "Personel")
-                        .WithMany()
-                        .HasForeignKey("PersonelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Personel");
-
-                    b.Navigation("PersonelGorev");
                 });
 
             modelBuilder.Entity("BisiyonPanelAPI.Domain.Uye", b =>
