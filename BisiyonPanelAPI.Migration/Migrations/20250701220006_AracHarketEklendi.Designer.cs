@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250701220006_AracHarketEklendi")]
+    partial class AracHarketEklendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1485,7 +1488,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .IsRequired();
 
                     b.HasOne("BisiyonPanelAPI.Domain.Blok", "Blok")
-                        .WithMany("Meskens")
+                        .WithMany()
                         .HasForeignKey("BlokId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1653,11 +1656,6 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BisiyonPanelAPI.Domain.Blok", b =>
-                {
-                    b.Navigation("Meskens");
                 });
 #pragma warning restore 612, 618
         }
