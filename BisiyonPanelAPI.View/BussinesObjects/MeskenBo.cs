@@ -34,12 +34,11 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             set { _MalikHisse = value; }
         }
         [StringLength(100)]
-         [AdaptMember("Ad")]
-        private string _BuPropIsimPropu;
-        public string BuPropIsimPropu
+        private string _Ad;
+        public string Ad
         {
-            get => _BuPropIsimPropu;
-            set { _BuPropIsimPropu = value; }
+            get => _Ad;
+            set { _Ad = value; }
         }
     
         private int? _M2;
