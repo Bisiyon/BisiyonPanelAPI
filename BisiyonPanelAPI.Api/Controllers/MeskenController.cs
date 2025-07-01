@@ -32,12 +32,12 @@ namespace BisiyonPanelAPI.Api
             return Ok(mesken);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Mesken>> Create([FromBody] Mesken mesken)
-        {
-            var createdMesken = await _meskenService.Insert(mesken);
-            return CreatedAtAction(nameof(GetById), new { id = createdMesken.Data.Id }, createdMesken);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Mesken>> Create([FromBody] Mesken mesken)
+        // {
+        //     var createdMesken = await _meskenService.Insert(mesken);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdMesken.Data.Id }, createdMesken);
+        // }
 
         // [HttpPut("{id}")]
         // public async Task<IActionResult> Update(int id, [FromBody] Mesken mesken)
@@ -53,16 +53,16 @@ namespace BisiyonPanelAPI.Api
         //     return Ok(result);
         // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existing = await _meskenService.GetByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var existing = await _meskenService.GetByIdAsync(id);
+        //     if (existing == null)
+        //         return NotFound();
 
-            Result<bool> result = await _meskenService.Delete(id);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _meskenService.Delete(id);
+        //     return Ok(result);
+        // }
 
         [HttpPost("GetAllMeskenByFilter")]
         public async Task<IActionResult> GetAllMeskenByFilter(DataFilterModelView model)

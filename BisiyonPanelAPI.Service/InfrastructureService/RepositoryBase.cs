@@ -72,68 +72,104 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<Result<T>> Insert(T entity)
+        public async Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model)
         {
-            Result<T> result = new();
+            PagedResult<List<T>> result = new();
             try
             {
-                await _dbSet.AddAsync(entity);
-                int rst = await _context.SaveChangesAsync();
-                result.Data = entity;
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
-            }
-            catch (System.Exception ex)
-            {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
-            }
-            return result;
-        }
+                IQueryable<T> query = _dbSet.AsQueryable();
 
-        public async Task<Result<bool>> Update(T oldEntity, T newEntity)
-        {
-            Result<bool> result = new();
-            try
-            {
-                _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
-                int rst = await _context.SaveChangesAsync();
-                result.Data = rst > 0;
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
-            }
-            catch (System.Exception ex)
-            {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
-                result.Data = false;
-            }
-            return result;
-        }
-
-        public async Task<Result<bool>> Delete(int id)
-        {
-            Result<bool> result = new();
-            try
-            {
-                T? entity = await _dbSet.FindAsync(id);
-                if (entity is null)
+                if (model.FilterQuery != null)
                 {
-                    result.Message = "Cannot find entity by id";
-                    result.State = ResultState.Fail;
-                    return result;
+                    query = query.BuildQuery(model.FilterQuery);
                 }
-                _dbSet.Entry(entity).State = EntityState.Deleted;
-                int rst = await _context.SaveChangesAsync();
-                result.Data = rst > 0;
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+
+                if (!string.IsNullOrEmpty(model.OrderByField))
+                {
+                    query = model.OrderByIsAsc
+                        ? query.OrderBy(x => EF.Property<object>(x, model.OrderByField))
+                        : query.OrderByDescending(x => EF.Property<object>(x, model.OrderByField));
+                }
+
+                if (model.Page > 0 && model.PageSize > 0)
+                {
+                    query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
+                }
+                var data = await query.ToListAsync();
+                var count = await query.CountAsync();
+                result.TotalRowCount = count;
+
+                result.Data = data;
+                result.State = ResultState.Successfull;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 result.Message = ex.Message;
                 result.Exception = ex;
                 result.State = ResultState.Fail;
-                result.Data = false;
+            }
+            return result;
+        }
+
+        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id)
+        {
+            Result<TDto?> result = new();
+            try
+            {
+                var data = await _dbSet.FindAsync(id);
+                var dtoData = data.Adapt<TDto>();
+                result.Data = dtoData;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+
+
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        {
+            Result<List<TDto>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+                if (includeFunc != null)
+                    query = includeFunc(query);
+                if (predicate != null) query = query.Where(predicate);
+                var dtoList = await query.ProjectToType<TDto>().ToListAsync();
+                result.Data = dtoList;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+            }
+            return result;
+        }
+
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
+        {
+            Result<List<TDto>> result = new();
+            try
+            {
+                IQueryable<T> query = _dbSet.AsQueryable();
+                var data = await query.ToListAsync();
+                var dtoList = data.Adapt<List<TDto>>();
+                result.Data = dtoList;
+                result.State = ResultState.Successfull;
+            }
+            catch (Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
             }
             return result;
         }
@@ -176,171 +212,98 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
-        public async Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model)
+        public async Task<T> Insert(T entity)
         {
-            PagedResult<List<T>> result = new();
             try
             {
-                IQueryable<T> query = _dbSet.AsQueryable();
-
-                if (model.FilterQuery != null)
-                {
-                    query = query.BuildQuery(model.FilterQuery);
-                }
-
-                if (!string.IsNullOrEmpty(model.OrderByField))
-                {
-                    query = model.OrderByIsAsc
-                        ? query.OrderBy(x => EF.Property<object>(x, model.OrderByField))
-                        : query.OrderByDescending(x => EF.Property<object>(x, model.OrderByField));
-                }
-
-                if (model.Page > 0 && model.PageSize > 0)
-                {
-                    query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
-                }
-                var data = await query.ToListAsync();
-                var count = await query.CountAsync();
-                result.TotalRowCount = count;
-
-                result.Data = data;
-                result.State = ResultState.Successfull;
+                await _dbSet.AddAsync(entity);
+                return entity;
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
+                return null;
             }
-            return result;
         }
 
-
-        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id)
+        public async Task<bool> Update(T oldEntity, T newEntity)
         {
-            Result<TDto?> result = new();
+            Result<bool> result = new();
             try
             {
-                var data = await _dbSet.FindAsync(id);
-                var dtoData = data.Adapt<TDto>();
-                result.Data = dtoData;
-                result.State = ResultState.Successfull;
+                _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+                return true;
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
+
+                return false;
             }
-            return result;
         }
 
-
-
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        public async Task<bool> Delete(int id)
         {
-            Result<List<TDto>> result = new();
             try
             {
-                IQueryable<T> query = _dbSet.AsQueryable();
-                if (includeFunc != null)
-                query = includeFunc(query);
-                if (predicate != null) query = query.Where(predicate);
-                var dtoList = await query.ProjectToType<TDto>().ToListAsync();
-                result.Data = dtoList;
-                result.State = ResultState.Successfull;
+                T? entity = await _dbSet.FindAsync(id);
+                if (entity is null)
+                {
+                    return false;
+                }
+                _dbSet.Entry(entity).State = EntityState.Deleted;
+                return true;
+                
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
+                return false;
             }
-            return result;
+            
         }
-
-        public async Task<Result<TDto>> Insert<TDto>(TDto entity)
+        public async Task<T> Insert<TDto>(TDto entity)
         {
-            Result<TDto> result = new();
             try
             {
                 var entityToInsert = entity.Adapt<T>();
                 await _dbSet.AddAsync(entityToInsert);
-                int rst = await _context.SaveChangesAsync();
-                result.Data = entityToInsert.Adapt<TDto>();
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+                return entityToInsert;
             }
             catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
+                return null;
             }
-            return result;
         }
-        public async Task<Result<List<TDto>>> BulkInsert<TDto>(List<TDto> entity)
+        public async Task<List<T>> BulkInsert<TDto>(List<TDto> entity)
         {
-            Result<List<TDto>> result = new ();
+            List<T> result = new();
             try
             {
                 var entityToInsert = entity.Adapt<List<T>>();
                 await _dbSet.AddRangeAsync(entityToInsert);
-                int rst = await _context.SaveChangesAsync();
-                result.Data = entityToInsert.Adapt<List<TDto>>();
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+                return entityToInsert;
+
             }
             catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
+                return result;
             }
-            return result;
         }
 
 
 
-        public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)
+        public async Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity)
         {
-            Result<bool> result = new();
             try
             {
                 var oldEntityToUpdate = oldEntity.Adapt<T>();
                 var newEntityToUpdate = newEntity.Adapt<T>();
                 _context.Entry(oldEntityToUpdate).CurrentValues.SetValues(newEntityToUpdate);
-                int rst = await _context.SaveChangesAsync();
-                result.Data = rst > 0;
-                result.State = rst > 0 ? ResultState.Successfull : ResultState.Fail;
+                return true;
             }
             catch (System.Exception ex)
             {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
-                result.Data = false;
+                return false;
             }
-            return result;
         }
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
-        {
-            Result<List<TDto>> result = new();
-            try
-            {
-                IQueryable<T> query = _dbSet.AsQueryable();
-                var data = await query.ToListAsync();
-                var dtoList = data.Adapt<List<TDto>>();
-                result.Data = dtoList;
-                result.State = ResultState.Successfull;
-            }
-            catch (Exception ex)
-            {
-                result.Message = ex.Message;
-                result.Exception = ex;
-                result.State = ResultState.Fail;
-            }
-            return result;
-        }
-
-        
+       
     }
 }

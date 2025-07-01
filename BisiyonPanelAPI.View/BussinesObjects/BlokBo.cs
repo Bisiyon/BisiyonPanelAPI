@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace BisiyonPanelAPI.View.BussinesObjects
 {
-    public class BlokBo 
+    public class BlokBo
     {
         private int _Id;
         public int Id
@@ -96,5 +97,6 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             get => _Aciklama;
             set { _Aciklama = value; }
         }
+    public ICollection<MeskenBo> Meskens { get; set; }
     }
 }

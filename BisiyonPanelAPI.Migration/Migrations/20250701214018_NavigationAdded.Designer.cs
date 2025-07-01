@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250701214018_NavigationAdded")]
+    partial class NavigationAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

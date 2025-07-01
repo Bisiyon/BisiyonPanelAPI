@@ -30,12 +30,12 @@ namespace BisiyonPanelAPI.Api
             return Ok(uyeHareket);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<UyeHareket>> Create([FromBody] UyeHareket uyeHareket)
-        {
-            var createdUyeHareket = await _uyeHareketService.Insert(uyeHareket);
-            return CreatedAtAction(nameof(GetById), new { id = createdUyeHareket.Data.Id }, createdUyeHareket);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<UyeHareket>> Create([FromBody] UyeHareket uyeHareket)
+        // {
+        //     var createdUyeHareket = await _uyeHareketService.Insert(uyeHareket);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdUyeHareket.Data.Id }, createdUyeHareket);
+        // }
 
         // [HttpPut("{id}")]
         // public async Task<IActionResult> Update(int id, [FromBody] UyeHareket uyeHareket)
@@ -51,16 +51,16 @@ namespace BisiyonPanelAPI.Api
         //     return Ok(result);
         // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existing = await _uyeHareketService.GetByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var existing = await _uyeHareketService.GetByIdAsync(id);
+        //     if (existing == null)
+        //         return NotFound();
 
-            Result<bool> result = await _uyeHareketService.Delete(id);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _uyeHareketService.Delete(id);
+        //     return Ok(result);
+        // }
 
         [HttpPost("GetAllUyeHareketByFilter")]
         public async Task<IActionResult> GetAllUyeHareketByFilter(DataFilterModelView model)

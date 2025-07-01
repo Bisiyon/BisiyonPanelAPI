@@ -32,12 +32,12 @@ namespace BisiyonPanelAPI.Api
             return Ok(AidatGrup);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<AidatGrup>> Create([FromBody] AidatGrup AidatGrup)
-        {
-            var createdAidatGrup = await _aidatGrupService.Insert(AidatGrup);
-            return CreatedAtAction(nameof(GetById), new { id = createdAidatGrup.Data.Id }, createdAidatGrup);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<AidatGrup>> Create([FromBody] AidatGrup AidatGrup)
+        // {
+        //     var createdAidatGrup = await _aidatGrupService.Insert(AidatGrup);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdAidatGrup.Data.Id }, createdAidatGrup);
+        // }
 
         // [HttpPut("{id}")]
         // public async Task<IActionResult> Update(int id, [FromBody] AidatGrup aidatGrup)

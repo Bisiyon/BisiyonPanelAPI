@@ -6,10 +6,10 @@ namespace BisiyonPanelAPI.View
     {
         public CreateNewBlokWithMeskenRequestDto()
         {
-            this.Meskens = new List<MeskenBo>();
+            // this.Meskens = new List<MeskenBo>();
         }
         public BlokBo Blok { get; set; }
-        public List<MeskenBo> Meskens { get; set; }
+        // public List<MeskenBo> Meskens { get; set; }
 
     }
 }

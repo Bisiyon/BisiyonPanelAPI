@@ -7,6 +7,7 @@ using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
 using BisiyonPanelAPI.View;
 using BisiyonPanelAPI.View.BussinesObjects;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -162,18 +163,21 @@ namespace BisiyonPanelAPI.Service
         public async Task<Result<BlokBo>> CreateBlokWithMesken(CreateNewBlokWithMeskenRequestDto dto)
         {
             var result = new Result<BlokBo>() { State = ResultState.Fail };
-            var blokEntity = await _unitOfWork.Repository<Blok>().Insert<BlokBo>(dto.Blok);
-            if (!blokEntity.IsSuccessfull || blokEntity.Data == null) return blokEntity;
-            foreach (var mesken in dto.Meskens)
+            try
             {
-                mesken.BlokId = blokEntity.Data.Id;
+                 var blok =await _unitOfWork.Repository<Blok>().Insert<BlokBo>(dto.Blok);
+    
+                var addToBlok =await _unitOfWork.SaveChangesAsync();
+                if (addToBlok.IsSuccessfull)
+                {
+                    result = await _unitOfWork.Repository<Blok>().GetByIdAsync<BlokBo>(blok.Id);
+                 }
             }
-            var addBloksMesken =await _unitOfWork.Repository<Mesken>().BulkInsert<MeskenBo>(dto.Meskens);
-            if (addBloksMesken.IsSuccessfull)
+            catch (System.Exception ex )
             {
-                result.State = ResultState.Successfull;
-                result.Data = blokEntity.Data; // Artık blokEntity.Id dolu
+                
             }
+           
             return result;
         }
     }

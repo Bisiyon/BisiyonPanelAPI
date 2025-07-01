@@ -27,17 +27,17 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetByIdAsync(id);
         }
 
-        public async Task<Result<T>> Insert(T entity)
+        public async Task<T> Insert(T entity)
         {
             return await _unitOfWork.Repository<T>().Insert(entity);
         }
 
-        public async Task<Result<bool>> Update(T oldEntity, T newEntity)
+        public async Task<bool> Update(T oldEntity, T newEntity)
         {
             return await _unitOfWork.Repository<T>().Update(oldEntity, newEntity);
         }
 
-        public async Task<Result<bool>> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             return await _unitOfWork.Repository<T>().Delete(id);
         }
@@ -51,9 +51,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetAllAsync(model);
         }
 
-        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(predicate,includeFunc);
+            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(predicate, includeFunc);
         }
         public async Task<Result<List<TDto>>> GetAllAsync<TDto>()
         {
@@ -65,19 +65,20 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().GetByIdAsync<TDto>(id);
 
         }
-
-        public async Task<Result<TDto>> Insert<TDto>(TDto entity)
+        public async Task<T> Insert<TDto>(TDto entity)
         {
             return await _unitOfWork.Repository<T>().Insert<TDto>(entity);
         }
-        public async Task<Result<List<TDto>>> BulkInsert<TDto>(List<TDto> entity)
+        public async Task<List<T>> BulkInsert<TDto>(List<TDto> entity)
         {
             return await _unitOfWork.Repository<T>().BulkInsert<TDto>(entity);
         }
-        
-        public async Task<Result<bool>> Update<TDto>(TDto newEntity, TDto oldEntity)
+
+        public async Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity)
         {
             return await _unitOfWork.Repository<T>().Update<TDto>(newEntity, oldEntity);
         }
+
+
     }
 }

@@ -27,10 +27,24 @@ namespace BisiyonPanelAPI.Service
             _repositories.Add(typeof(T), repositoryInstance);
             return repositoryInstance;
         }
-
-        public async Task<int> SaveChangesAsync()
+        public async Task<Result<bool>> SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            Result<bool> result = new();
+            try
+            {
+                var commitResult = await _context.SaveChangesAsync();
+                result.State = commitResult > 0 ? ResultState.Successfull : ResultState.Fail;
+                result.Data = commitResult > 0;
+
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
+                result.Exception = ex;
+                result.State = ResultState.Fail;
+                result.Data = false;
+            }
+            return result;
         }
 
         protected virtual void Dispose(bool disposing)

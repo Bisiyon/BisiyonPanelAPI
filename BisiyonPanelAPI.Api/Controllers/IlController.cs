@@ -32,39 +32,39 @@ namespace BisiyonPanelAPI.Api
             return Ok(il);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Il>> Create([FromBody] IlBo il)
-        {
-            var createdIl = await _ilService.Insert(il);
-            return CreatedAtAction(nameof(GetById), new { id = createdIl.Data.Id }, createdIl);
-        }
+        // [HttpPost]
+        // public async Task<ActionResult<Il>> Create([FromBody] IlBo il)
+        // {
+        //     var createdIl = await _ilService.Insert(il);
+        //     return CreatedAtAction(nameof(GetById), new { id = createdIl.Data.Id }, createdIl);
+        // }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] IlBo il)
-        {
-            if (id != il.Id)
-                return BadRequest("ID eşleşmiyor.");
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Update(int id, [FromBody] IlBo il)
+        // {
+        //     if (id != il.Id)
+        //         return BadRequest("ID eşleşmiyor.");
 
-            var existing = await _ilService.GetByIdAsync(id);
-            if (existing.Data == null)
-                return NotFound();
+        //     var existing = await _ilService.GetByIdAsync(id);
+        //     if (existing.Data == null)
+        //         return NotFound();
 
-            var oldEntity = existing.Data.Adapt<IlBo>();
+        //     var oldEntity = existing.Data.Adapt<IlBo>();
 
-            Result<bool> result = await _ilService.Update<IlBo>(oldEntity, il);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _ilService.Update<IlBo>(oldEntity, il);
+        //     return Ok(result);
+        // }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var existing = await _ilService.GetByIdAsync(id);
-            if (existing == null)
-                return NotFound();
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete(int id)
+        // {
+        //     var existing = await _ilService.GetByIdAsync(id);
+        //     if (existing == null)
+        //         return NotFound();
 
-            Result<bool> result = await _ilService.Delete(id);
-            return Ok(result);
-        }
+        //     Result<bool> result = await _ilService.Delete(id);
+        //     return Ok(result);
+        // }
 
         [HttpPost("GetAllIlByFilter")]
         public async Task<IActionResult> GetAllIlByFilter(DataFilterModelView model)
