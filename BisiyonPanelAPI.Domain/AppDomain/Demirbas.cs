@@ -17,7 +17,7 @@ namespace BisiyonPanelAPI.Domain
         public decimal Fiyat { get; set; }
         public decimal Kdv { get; set; }
         public decimal Tutar { get; set; }
-        public DateTime GarantiBaslangicTarihi { get; set; }
-        public DateTime GarantiBitisTarihi { get; set; }
+        public DateTime? GarantiBaslangicTarihi { get; set; }
+        public DateTime? GarantiBitisTarihi { get; set; }
     }
 }
