@@ -105,7 +105,6 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPost("CreateNewBlokWithMesken")]
-        [AllowAnonymous]
         public async Task<IActionResult> CreateNewBlokWithMesken([FromBody] CreateNewBlokWithMeskenRequestDto dto)
         {
             var result = await _blokService.CreateBlokWithMesken(dto);
