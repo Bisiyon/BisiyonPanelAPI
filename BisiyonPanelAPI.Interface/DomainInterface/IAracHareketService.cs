@@ -12,7 +12,6 @@ namespace BisiyonPanelAPI.Interface
         Task<Result<AracHareket>> InsertAsync(AracHareketBo entity);
         Task<Result<AracHareket>> UpdateAsync(AracHareketBo entity);
         Task<Result<bool>> DeleteAsync(int id);
-
         Task<Result<AracHareket>> LogAracGirisCikisAsync(int aracId, int aracHareketTipId);
     }
 }
