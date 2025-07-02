@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    partial class BisiyonAppContextModelSnapshot : ModelSnapshot
+    [Migration("20250702222257_blokNullableFieldsAdded")]
+    partial class blokNullableFieldsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,6 +229,9 @@ namespace BisiyonPanelAPI.Migration.Migrations
 
                     b.Property<string>("BinaNo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BlokTipId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CaddeSokak")
                         .HasColumnType("nvarchar(max)");
@@ -576,6 +582,7 @@ namespace BisiyonPanelAPI.Migration.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int?>("AidatGrupId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("ArsaPayi")
@@ -1454,7 +1461,9 @@ namespace BisiyonPanelAPI.Migration.Migrations
                 {
                     b.HasOne("BisiyonPanelAPI.Domain.AidatGrup", "AidatGrup")
                         .WithMany()
-                        .HasForeignKey("AidatGrupId");
+                        .HasForeignKey("AidatGrupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BisiyonPanelAPI.Domain.Blok", "Blok")
                         .WithMany("Meskens")

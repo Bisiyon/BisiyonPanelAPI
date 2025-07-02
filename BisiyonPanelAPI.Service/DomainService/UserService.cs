@@ -47,7 +47,7 @@ namespace BisiyonPanelAPI.Service
                 {
                     await context.Database.MigrateAsync();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
                 }

@@ -30,7 +30,7 @@ namespace BisiyonPanelAPI.Domain
         public int? KatSayisi { get; set; }
 
         [ForeignKey(nameof(AidatGrupId))]
-        public AidatGrup AidatGrup { get; set; }
+        public AidatGrup? AidatGrup { get; set; }
 
         [ForeignKey(nameof(MeskenTipId))]
         public MeskenTipi MeskenTipi { get; set; }

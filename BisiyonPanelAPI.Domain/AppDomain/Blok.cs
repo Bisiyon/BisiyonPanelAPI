@@ -13,24 +13,19 @@ namespace BisiyonPanelAPI.Domain
         public int ToplamKatSayisi { get; set; }
         public int VarsayilanKattakiDaireSayisi { get; set; }
         public int KatBaslangicKati { get; set; }
-        public bool MeskenOlusturuldu { get; set; }
-        public int BlokTipId { get; set; }
-        public int IlId { get; set; }
-        public int IlceId { get; set; }
-        public string MahalleKoyMezraMevki { get; set; }
-        public string CaddeSokak { get; set; }
-        public string Apartman { get; set; }
-        public string BinaNo { get; set; }
-        public string Aciklama { get; set; }
+        public int? IlId { get; set; }
+        public int? IlceId { get; set; }
+        public string? MahalleKoyMezraMevki { get; set; }
+        public string? CaddeSokak { get; set; }
+        public string? Apartman { get; set; }
+        public string? BinaNo { get; set; }
+        public string? Aciklama { get; set; }
 
         [ForeignKey(nameof(IlId))]
-        public Il Il { get; set; }
+        public Il? Il { get; set; }
 
         [ForeignKey(nameof(IlceId))]
-        public Ilce Ilce { get; set; }
-
-        [ForeignKey(nameof(BlokTipId))]
-        public MeskenTipi MeskenTipi { get; set; }
+        public Ilce? Ilce { get; set; }
         public ICollection<Mesken> Meskens { get; set; } = new List<Mesken>();
 
 

@@ -49,50 +49,44 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             get => _MeskenOlusturuldu;
             set { _MeskenOlusturuldu = value; }
         }
-        private int _BlokTipId;
-        public int BlokTipId
-        {
-            get => _BlokTipId;
-            set { _BlokTipId = value; }
-        }
-        private int _IlId;
-        public int IlId
+        private int? _IlId;
+        public int? IlId
         {
             get => _IlId;
             set { _IlId = value; }
         }
-        private int _IlceId;
-        public int IlceId
+        private int? _IlceId;
+        public int? IlceId
         {
             get => _IlceId;
             set { _IlceId = value; }
         }
-        private string _MahalleKoyMezraMevki;
-        public string MahalleKoyMezraMevki
+        private string? _MahalleKoyMezraMevki;
+        public string? MahalleKoyMezraMevki
         {
             get => _MahalleKoyMezraMevki;
             set { _MahalleKoyMezraMevki = value; }
         }
-        private string _CaddeSokak;
-        public string CaddeSokak
+        private string? _CaddeSokak;
+        public string? CaddeSokak
         {
             get => _CaddeSokak;
             set { _CaddeSokak = value; }
         }
-        private string _Apartman;
-        public string Apartman
+        private string? _Apartman;
+        public string? Apartman
         {
             get => _Apartman;
             set { _Apartman = value; }
         }
-        private string _BinaNo;
-        public string BinaNo
+        private string? _BinaNo;
+        public string? BinaNo
         {
             get => _BinaNo;
             set { _BinaNo = value; }
         }
-        private string _Aciklama;
-        public string Aciklama
+        private string? _Aciklama;
+        public string? Aciklama
         {
             get => _Aciklama;
             set { _Aciklama = value; }
