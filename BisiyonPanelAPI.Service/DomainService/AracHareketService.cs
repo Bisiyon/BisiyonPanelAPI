@@ -87,7 +87,7 @@ namespace BisiyonPanelAPI.Service
         {
             try
             {
-                var existing = await _unitOfWork.Repository<AracHareket>().GetByIdAsync<AracHareketBo>(entity.Id); 
+                var existing = await _unitOfWork.Repository<AracHareket>().GetByIdAsync<AracHareketBo>(entity.Id);
 
                 if (existing == null)
                 {
@@ -137,6 +137,45 @@ namespace BisiyonPanelAPI.Service
                     State = ResultState.Fail,
                     Message = "AracHareket silinemedi. Hata: " + ex.Message,
                     Data = false
+                };
+            }
+        }
+        
+        public async Task<Result<AracHareket>> LogAracGirisCikisAsync(int aracId, int aracHareketTipId)
+        {
+            try
+            {
+                var arac = await _unitOfWork.Repository<Arac>().GetByIdAsync(aracId);
+                if (arac == null)
+                {
+                    return new Result<AracHareket>
+                    {
+                        State = ResultState.Fail,
+                        Message = "Araç bulunamadı."
+                    };
+                }
+
+                var aracHareket = new AracHareket
+                {
+                    AracId = aracId,
+                    AracHereketTipId = aracHareketTipId,
+                    Tarih = DateTime.Now
+                };
+
+                var aracHareketEntity = await _unitOfWork.Repository<AracHareket>().Insert<AracHareket>(aracHareket);
+
+                return new Result<AracHareket>
+                {
+                    Data = aracHareketEntity,
+                    State = ResultState.Successfull
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Result<AracHareket>
+                {
+                    State = ResultState.Fail,
+                    Message = "Bir hata oluştu: " + ex.Message
                 };
             }
         }
