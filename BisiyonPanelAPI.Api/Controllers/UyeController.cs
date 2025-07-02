@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -17,50 +18,49 @@ namespace BisiyonPanelAPI.Api
         [HttpGet]
         public async Task<ActionResult<List<Uye>>> GetAll()
         {
-            var result = await _uyeService.GetAllAsync();
+            var result = await _uyeService.GetAll();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Uye>> GetById(int id)
         {
-            var uye = await _uyeService.GetByIdAsync(id);
+            var uye = await _uyeService.GetById(id);
             if (uye == null)
                 return NotFound();
             return Ok(uye);
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<Uye>> Create([FromBody] Uye uye)
-        // {
-        //     var createdUye = await _uyeService.Insert(uye);
-        //     return CreatedAtAction(nameof(GetById), new { id = createdUye.Data.Id }, createdUye);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Result<Uye>>> Create([FromBody] UyeBo bo)
+        {
+            var result = await _uyeService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] Uye uye)
-        // {
-        //     if (id != uye.Id)
-        //         return BadRequest("ID eşleşmiyor.");
+        [HttpPut]
+        public async Task<ActionResult<Result<Uye>>> Update([FromBody] UyeBo bo)
+        {
+            var result = await _uyeService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        //     var existing = await _uyeService.GetByIdAsync(id);
-        //     if (existing.Data == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeService.Update(existing.Data, uye);
-        //     return Ok(result);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var existing = await _uyeService.GetByIdAsync(id);
-        //     if (existing == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeService.Delete(id);
-        //     return Ok(result);
-        // }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Uye>> Delete(int id)
+        {
+            var uye = await _uyeService.DeleteAsync(id);
+            if (uye == null)
+                return NotFound();
+            return Ok(uye);
+        }
 
         [HttpPost("GetAllUyeByFilter")]
         public async Task<IActionResult> GetAllUyeByFilter(DataFilterModelView model)

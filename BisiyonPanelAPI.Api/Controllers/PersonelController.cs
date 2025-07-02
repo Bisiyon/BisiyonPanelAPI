@@ -16,7 +16,52 @@ namespace BisiyonPanelAPI.Api
             _personelService = personelService;
         }
 
-         
+        [HttpGet]
+        public async Task<ActionResult<List<Personel>>> GetAll()
+        {
+            var result = await _personelService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Personel>> GetById(int id)
+        {
+            var personel = await _personelService.GetById(id);
+            if (personel == null)
+                return NotFound();
+            return Ok(personel);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Result<Personel>>> Create([FromBody] PersonelBo bo)
+        {
+            var result = await _personelService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Result<Personel>>> Update([FromBody] PersonelBo bo)
+        {
+            var result = await _personelService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Personel>> Delete(int id)
+        {
+            var personel = await _personelService.DeleteAsync(id);
+            if (personel == null)
+                return NotFound();
+            return Ok(personel);
+        }
 
         [HttpPost("GetAllPersonelByFilter")]
         public async Task<IActionResult> GetAllPersonelByFilter(DataFilterModelView model)

@@ -16,7 +16,52 @@ namespace BisiyonPanelAPI.Api
             _meskenService = meskenService;
         }
 
-         
+        [HttpGet]
+        public async Task<ActionResult<List<Mesken>>> GetAll()
+        {
+            var result = await _meskenService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Mesken>> GetById(int id)
+        {
+            var mesken = await _meskenService.GetById(id);
+            if (mesken == null)
+                return NotFound();
+            return Ok(mesken);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Result<Mesken>>> Create([FromBody] MeskenBo bo)
+        {
+            var result = await _meskenService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Result<Mesken>>> Update([FromBody] MeskenBo bo)
+        {
+            var result = await _meskenService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Mesken>> Delete(int id)
+        {
+            var mesken = await _meskenService.DeleteAsync(id);
+            if (mesken == null)
+                return NotFound();
+            return Ok(mesken);
+        }
 
         [HttpPost("GetAllMeskenByFilter")]
         public async Task<IActionResult> GetAllMeskenByFilter(DataFilterModelView model)
@@ -46,6 +91,5 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
-
     }
 }

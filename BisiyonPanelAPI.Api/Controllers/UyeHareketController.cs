@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -17,50 +18,49 @@ namespace BisiyonPanelAPI.Api
         [HttpGet]
         public async Task<ActionResult<List<UyeHareket>>> GetAll()
         {
-            var result = await _uyeHareketService.GetAllAsync();
+            var result = await _uyeHareketService.GetAll();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UyeHareket>> GetById(int id)
         {
-            var uyeHareket = await _uyeHareketService.GetByIdAsync(id);
+            var uyeHareket = await _uyeHareketService.GetById(id);
             if (uyeHareket == null)
                 return NotFound();
             return Ok(uyeHareket);
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<UyeHareket>> Create([FromBody] UyeHareket uyeHareket)
-        // {
-        //     var createdUyeHareket = await _uyeHareketService.Insert(uyeHareket);
-        //     return CreatedAtAction(nameof(GetById), new { id = createdUyeHareket.Data.Id }, createdUyeHareket);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Result<UyeHareket>>> Create([FromBody] UyeHareketBo bo)
+        {
+            var result = await _uyeHareketService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] UyeHareket uyeHareket)
-        // {
-        //     if (id != uyeHareket.Id)
-        //         return BadRequest("ID eşleşmiyor.");
+        [HttpPut]
+        public async Task<ActionResult<Result<UyeHareket>>> Update([FromBody] UyeHareketBo bo)
+        {
+            var result = await _uyeHareketService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        //     var existing = await _uyeHareketService.GetByIdAsync(id);
-        //     if (existing.Data == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeHareketService.Update(existing.Data, uyeHareket);
-        //     return Ok(result);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var existing = await _uyeHareketService.GetByIdAsync(id);
-        //     if (existing == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeHareketService.Delete(id);
-        //     return Ok(result);
-        // }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<UyeHareket>> Delete(int id)
+        {
+            var uyeHareket = await _uyeHareketService.DeleteAsync(id);
+            if (uyeHareket == null)
+                return NotFound();
+            return Ok(uyeHareket);
+        }
 
         [HttpPost("GetAllUyeHareketByFilter")]
         public async Task<IActionResult> GetAllUyeHareketByFilter(DataFilterModelView model)

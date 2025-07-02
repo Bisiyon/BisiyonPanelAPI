@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.View;
 using Microsoft.AspNetCore.Authorization;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -18,7 +19,52 @@ namespace BisiyonPanelAPI.Api
             _meskenService = meskenService;
         }
 
-         
+        [HttpGet]
+        public async Task<ActionResult<List<Blok>>> GetAll()
+        {
+            var result = await _blokService.GetAll();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Blok>> GetById(int id)
+        {
+            var blok = await _blokService.GetById(id);
+            if (blok == null)
+                return NotFound();
+            return Ok(blok);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Result<Blok>>> Create([FromBody] BlokBo bo)
+        {
+            var result = await _blokService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Result<Blok>>> Update([FromBody] BlokBo bo)
+        {
+            var result = await _blokService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Blok>> Delete(int id)
+        {
+            var blok = await _blokService.DeleteAsync(id);
+            if (blok == null)
+                return NotFound();
+            return Ok(blok);
+        }
 
         [HttpPost("GetAllBlokByFilter")]
         public async Task<IActionResult> GetAllBlokByFilter(DataFilterModelView model)

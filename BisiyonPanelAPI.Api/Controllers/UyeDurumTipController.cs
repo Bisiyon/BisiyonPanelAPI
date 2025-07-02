@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
+using BisiyonPanelAPI.View.BussinesObjects;
 
 namespace BisiyonPanelAPI.Api
 {
@@ -17,50 +18,49 @@ namespace BisiyonPanelAPI.Api
         [HttpGet]
         public async Task<ActionResult<List<UyeDurumTip>>> GetAll()
         {
-            var result = await _uyeDurumTipService.GetAllAsync();
+            var result = await _uyeDurumTipService.GetAll();
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<UyeDurumTip>> GetById(int id)
         {
-            var uyeDurumTip = await _uyeDurumTipService.GetByIdAsync(id);
+            var uyeDurumTip = await _uyeDurumTipService.GetById(id);
             if (uyeDurumTip == null)
                 return NotFound();
             return Ok(uyeDurumTip);
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<UyeDurumTip>> Create([FromBody] UyeDurumTip uyeDurumTip)
-        // {
-        //     var createdUyeDurumTip = await _uyeDurumTipService.Insert(uyeDurumTip);
-        //     return CreatedAtAction(nameof(GetById), new { id = createdUyeDurumTip.Data.Id }, createdUyeDurumTip);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Result<UyeDurumTip>>> Create([FromBody] UyeDurumTipBo bo)
+        {
+            var result = await _uyeDurumTipService.InsertAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] UyeDurumTip uyeDurumTip)
-        // {
-        //     if (id != uyeDurumTip.Id)
-        //         return BadRequest("ID eşleşmiyor.");
+        [HttpPut]
+        public async Task<ActionResult<Result<UyeDurumTip>>> Update([FromBody] UyeDurumTipBo bo)
+        {
+            var result = await _uyeDurumTipService.UpdateAsync(bo);
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
-        //     var existing = await _uyeDurumTipService.GetByIdAsync(id);
-        //     if (existing.Data == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeDurumTipService.Update(existing.Data, uyeDurumTip);
-        //     return Ok(result);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var existing = await _uyeDurumTipService.GetByIdAsync(id);
-        //     if (existing == null)
-        //         return NotFound();
-
-        //     Result<bool> result = await _uyeDurumTipService.Delete(id);
-        //     return Ok(result);
-        // }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<UyeDurumTip>> Delete(int id)
+        {
+            var uyeDurumTip = await _uyeDurumTipService.DeleteAsync(id);
+            if (uyeDurumTip == null)
+                return NotFound();
+            return Ok(uyeDurumTip);
+        }
 
         [HttpPost("GetAllUyeDurumTipByFilter")]
         public async Task<IActionResult> GetAllUyeDurumTipByFilter(DataFilterModelView model)
