@@ -112,11 +112,5 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("Data is null");
             return Ok(result);
         }
-
-
-
-
- 
-
     }
 }

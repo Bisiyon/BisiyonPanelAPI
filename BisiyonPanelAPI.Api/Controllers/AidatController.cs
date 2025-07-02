@@ -1,7 +1,7 @@
 using BisiyonPanelAPI.Interface;
 using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
-using BisiyonPanelAPI.Common; 
+using BisiyonPanelAPI.Common;
 using Mapster;
 using BisiyonPanelAPI.View.BussinesObjects;
 
@@ -19,7 +19,7 @@ namespace BisiyonPanelAPI.Api
         [HttpGet]
         public async Task<ActionResult<List<Aidat>>> GetAll()
         {
-            var result = await _aidatService.GetAllAsync();
+            var result = await _aidatService.GetAll();
             return Ok(result);
         }
 
@@ -27,47 +27,49 @@ namespace BisiyonPanelAPI.Api
         [HttpGet("{id}")]
         public async Task<ActionResult<Aidat>> GetById(int id)
         {
-            var aidat = await _aidatService.GetByIdAsync(id);
+            var aidat = await _aidatService.GetById(id);
             if (aidat == null)
                 return NotFound();
             return Ok(aidat);
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<Aidat>> Create([FromBody] AidatBo aidat)
-        // {
-        //     var createdAidat = await _aidatService.Insert(aidat);
-        //     return CreatedAtAction(nameof(GetById), new { id = createdAidat.Data.Id }, createdAidat);
-        // }
+        [HttpPost]
+        public async Task<ActionResult<Result<Aidat>>> Create([FromBody] AidatBo bo)
+        {
+            var result = await _aidatService.InsertAsync(bo);
 
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> Update(int id, [FromBody] AidatBo aidat)
-        // {
-        //     if (id != aidat.Id)
-        //         return BadRequest("ID eşleşmiyor.");
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
 
-        //     var existing = await _aidatService.GetByIdAsync(id);
-        //     if (existing.Data == null)
-        //         return NotFound();
-
-        //     var oldEntity = existing.Data.Adapt<AidatBo>();
+            return Ok(result);
+        }
 
 
-        //     Result<bool> result = await _aidatService.Update<AidatBo>(oldEntity, aidat);
-        //     return Ok(result);
-        // }
+        [HttpPut]
+        public async Task<ActionResult<Result<Aidat>>> Update([FromBody] AidatBo bo)
+        {
+            var result = await _aidatService.UpdateAsync(bo);
 
-        // [HttpDelete("{id}")]
-        // public async Task<IActionResult> Delete(int id)
-        // {
-        //     var existing = await _aidatService.GetByIdAsync(id);
-        //     if (existing == null)
-        //         return NotFound();
+            if (result.State == ResultState.Fail)
+            {
+                return BadRequest(result);
+            }
 
-        //     Result<bool> result = await _aidatService.Delete(id);
-        //     return Ok(result);
-        // }
-        
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Aidat>> Delete(int id)
+        {
+            var aidat = await _aidatService.DeleteAsync(id);
+            if (aidat == null)
+                return NotFound();
+            return Ok(aidat);
+        }
+
+
         [HttpPost("GetAllAidatByFilter")]
         public async Task<IActionResult> GetAllAidatByFilter(DataFilterModelView model)
         {

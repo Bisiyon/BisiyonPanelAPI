@@ -14,12 +14,12 @@ namespace BisiyonPanelAPI.Interface
         Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model);
         Task<Result<T?>> GetByIdAsync(int id);
         Task<T> Insert(T entity);
-        Task<bool> Update(T oldEntity, T newEntity);
+        Task<bool> Update(T newEntity);
         Task<bool> Delete(int id);
 
         Task<Result<TDto?>> GetByIdAsync<TDto>(int id);
         Task<T> Insert<TDto>(TDto entity);
         Task<List<T>> BulkInsert<TDto>(List<TDto> entity);
-        Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity);
+        Task<bool> Update<TDto>(TDto newEntity);
     }
 }

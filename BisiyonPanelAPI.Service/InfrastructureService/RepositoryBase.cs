@@ -225,17 +225,22 @@ namespace BisiyonPanelAPI.Service
             }
         }
 
-        public async Task<bool> Update(T oldEntity, T newEntity)
+        public async Task<bool> Update(T newEntity)
         {
-            Result<bool> result = new();
             try
             {
-                _context.Entry(oldEntity).CurrentValues.SetValues(newEntity);
+                var keyValues = GetPrimaryKeyValues(_context, newEntity);
+                var trackedEntity = await _dbSet.FindAsync(keyValues);
+
+                if (trackedEntity == null)
+                    return false;
+
+                _context.Entry(trackedEntity).CurrentValues.SetValues(newEntity);
                 return true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-
+                // loglama yapılabilir
                 return false;
             }
         }
@@ -251,14 +256,14 @@ namespace BisiyonPanelAPI.Service
                 }
                 _dbSet.Entry(entity).State = EntityState.Deleted;
                 return true;
-                
+
             }
             catch (System.Exception ex)
             {
                 return false;
             }
-            
         }
+
         public async Task<T> Insert<TDto>(TDto entity)
         {
             try
@@ -288,22 +293,40 @@ namespace BisiyonPanelAPI.Service
             }
         }
 
-
-
-        public async Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity)
+        public async Task<bool> Update<TDto>(TDto newEntity)
         {
             try
             {
-                var oldEntityToUpdate = oldEntity.Adapt<T>();
-                var newEntityToUpdate = newEntity.Adapt<T>();
-                _context.Entry(oldEntityToUpdate).CurrentValues.SetValues(newEntityToUpdate);
+                var newDto = newEntity.Adapt<T>();
+                var keyValues = GetPrimaryKeyValues(_context, newDto);
+                var trackedEntity = await _dbSet.FindAsync(keyValues);
+
+                if (trackedEntity == null)
+                    return false;
+
+                _context.Entry(trackedEntity).CurrentValues.SetValues(newDto);
                 return true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                // loglama yapılabilir
                 return false;
             }
         }
-       
+
+        private object[] GetPrimaryKeyValues<T>(DbContext context, T entity)
+        {
+            var entityType = context.Model.FindEntityType(typeof(T));
+            var keyProperties = entityType?.FindPrimaryKey()?.Properties;
+
+            if (keyProperties == null)
+                throw new Exception($"Primary key not found for entity {typeof(T).Name}");
+
+            var values = keyProperties
+                .Select(p => typeof(T).GetProperty(p.Name)?.GetValue(entity))
+                .ToArray();
+
+            return values!;
+        }
     }
 }

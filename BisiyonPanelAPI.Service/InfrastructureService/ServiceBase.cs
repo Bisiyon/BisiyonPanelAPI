@@ -32,9 +32,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().Insert(entity);
         }
 
-        public async Task<bool> Update(T oldEntity, T newEntity)
+        public async Task<bool> Update(T newEntity)
         {
-            return await _unitOfWork.Repository<T>().Update(oldEntity, newEntity);
+            return await _unitOfWork.Repository<T>().Update(newEntity);
         }
 
         public async Task<bool> Delete(int id)
@@ -74,9 +74,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().BulkInsert<TDto>(entity);
         }
 
-        public async Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity)
+        public async Task<bool> Update<TDto>(TDto newEntity)
         {
-            return await _unitOfWork.Repository<T>().Update<TDto>(newEntity, oldEntity);
+            return await _unitOfWork.Repository<T>().Update<TDto>(newEntity);
         }
 
 

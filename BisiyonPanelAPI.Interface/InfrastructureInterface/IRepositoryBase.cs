@@ -18,8 +18,8 @@ namespace BisiyonPanelAPI.Interface
         Task<T> Insert(T entity);
         Task<T> Insert<TDto>(TDto entity);
         Task<List<T>> BulkInsert<TDto>(List<TDto> entity);
-        Task<bool> Update(T newEntity, T oldEntity);
-        Task<bool> Update<TDto>(TDto newEntity, TDto oldEntity);
+        Task<bool> Update(T newEntity);
+        Task<bool> Update<TDto>(TDto newEntity);
         Task<bool> Delete(int id);
         
     }
