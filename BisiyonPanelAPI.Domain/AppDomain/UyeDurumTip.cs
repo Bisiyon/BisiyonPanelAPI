@@ -1,6 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using BisiyonPanelAPI.Domain;
+using BisiyonPanelAPI.Common;
 
-namespace BisiyonPanelAPI.Domain
+
+
+namespace BisiyonPanelAPI.Common
 {
     public class UyeDurumTip : BaseEntity, IEntity
     {
@@ -11,5 +15,7 @@ namespace BisiyonPanelAPI.Domain
         /// </summary>
         [StringLength(50)]
         public string Durum { get; set; }
+        public Enum_UyeDurumTip? EnumId { get; set; }
+
     }
 }

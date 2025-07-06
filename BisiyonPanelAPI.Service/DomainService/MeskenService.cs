@@ -135,7 +135,11 @@ namespace BisiyonPanelAPI.Service
 
         public async Task<PagedResult<List<GetAllMeskenListResponseDto>>> GetAllMeskenList(DataFilterModelView model)
         {
-            var result = await _unitOfWork.Repository<Mesken>().GetAllAsync<GetAllMeskenListResponseDto>(model, query => query.Include(x => x.Blok));
+            var result = await _unitOfWork.Repository<Mesken>().GetAllAsync<GetAllMeskenListResponseDto>(model, query =>
+            query.Include(x => x.Blok)
+                .Include(x => x.MeskenTipi)
+                .Include(x => x.AidatGrup)
+                .Include(x => x.MeskenUyes).ThenInclude(x => x.Uye));
             return result;
         }
     }

@@ -1,9 +1,9 @@
 using System.Reflection;
 using Autofac;
+using BisiyonPanelAPI.Common.MappingConfigs;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Service;
-using BisiyonPanelAPI.View;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

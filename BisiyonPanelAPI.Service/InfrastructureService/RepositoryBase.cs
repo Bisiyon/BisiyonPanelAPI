@@ -82,7 +82,7 @@ namespace BisiyonPanelAPI.Service
                 {
                     query = query.BuildQuery(model.FilterQuery);
                 }
-
+                var countQuery = query;
                 if (!string.IsNullOrEmpty(model.OrderByField))
                 {
                     query = model.OrderByIsAsc
@@ -95,7 +95,7 @@ namespace BisiyonPanelAPI.Service
                     query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
                 }
                 var data = await query.ToListAsync();
-                var count = await query.CountAsync();
+                var count = await countQuery.CountAsync();
                 result.TotalRowCount = count;
 
                 result.Data = data;
@@ -185,6 +185,7 @@ namespace BisiyonPanelAPI.Service
                 {
                     query = query.BuildQuery(model.FilterQuery);
                 }
+                var countQuery = query;
 
                 if (!string.IsNullOrEmpty(model.OrderByField))
                 {
@@ -199,7 +200,7 @@ namespace BisiyonPanelAPI.Service
                 }
                 var testbora = query.ProjectToType<TDto>();
                 var dtoList = await query.ProjectToType<TDto>().ToListAsync();
-                var count = await query.CountAsync();
+                var count = await countQuery.CountAsync();
                 result.TotalRowCount = count;
                 result.Data = dtoList;
                 result.State = ResultState.Successfull;

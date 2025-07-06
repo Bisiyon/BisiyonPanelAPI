@@ -1,3 +1,4 @@
+using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

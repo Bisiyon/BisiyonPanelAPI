@@ -25,6 +25,7 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             get => _MeskenId;
             set { _MeskenId = value; }
         }
+        public UyeBo Uye { get; set; }
 
     }
 }

@@ -37,6 +37,7 @@ namespace BisiyonPanelAPI.Domain
 
         [ForeignKey(nameof(BlokId))]
         public Blok Blok { get; set; }
+        public ICollection<MeskenUye> MeskenUyes{ get; set; } = new List<MeskenUye>();
  
     }
 }

@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
     <PackageReference Include="Castle.DynamicLinqQueryBuilder" Version="1.2.0" />
+    <PackageReference Include="Castle.DynamicLinqQueryBuilder" Version="1.2.0" />
+    <ProjectReference Include="../BisiyonPanelAPI.Common/BisiyonPanelAPI.Common.csproj" />
   </ItemGroup>
 
 </Project>
