@@ -9,7 +9,6 @@ namespace BisiyonPanelAPI.Domain
         public int Id { get; set; }
         public int BlokId { get; set; }
         public int? MeskenTipId { get; set; }
-        public int MalikHisse { get; set; } = 100;
         [StringLength(100)]
         public string Ad { get; set; }
         public int? Kat { get; set; }

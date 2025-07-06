@@ -4,7 +4,6 @@ namespace BisiyonPanelAPI.Common
     {
         EvSahibi = 1,
         Kiraci = 2,
-        Sakin = 3,
-        Hissedar = 4
+        Sakin = 3, 
     }
 }

@@ -11,6 +11,7 @@ namespace BisiyonPanelAPI.Domain
         public int UyeId { get; set; }
         public int UyeDurumTipId { get; set; }
         public int MeskenId { get; set; }
+        public int MalikHisse { get; set; } = 100;
 
         [ForeignKey(nameof(MeskenId))]
         public Mesken Mesken { get; set; }
