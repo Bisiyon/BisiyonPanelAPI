@@ -8,7 +8,6 @@ namespace BisiyonPanelAPI.Domain
     {
         [Key]
         public int Id { get; set; }
-        public int UyeDurumTipId { get; set; }
         public string Ad { get; set; }
         public string Soyad { get; set; }
         public string CinsiyetId { get; set; }
@@ -28,9 +27,6 @@ namespace BisiyonPanelAPI.Domain
         public decimal? AcilisBakiyesi { get; set; }
         public string TebligatAdres { get; set; }
         public string Aciklama { get; set; }
-
-        [ForeignKey(nameof(UyeDurumTipId))]
-        public UyeDurumTip UyeDurumTip { get; set; }
 
         [ForeignKey(nameof(IlId))]
         public Il Il { get; set; }

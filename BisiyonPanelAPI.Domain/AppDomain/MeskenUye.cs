@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BisiyonPanelAPI.Common;
 
 namespace BisiyonPanelAPI.Domain
 {
@@ -8,6 +9,7 @@ namespace BisiyonPanelAPI.Domain
         [Key]
         public int Id { get; set; }
         public int UyeId { get; set; }
+        public int UyeDurumTipId { get; set; }
         public int MeskenId { get; set; }
 
         [ForeignKey(nameof(MeskenId))]
@@ -15,6 +17,9 @@ namespace BisiyonPanelAPI.Domain
 
         [ForeignKey(nameof(UyeId))]
         public Uye Uye { get; set; }
+
+        [ForeignKey(nameof(UyeDurumTipId))]
+        public UyeDurumTip UyeDurumTip { get; set; }
 
     }
 }

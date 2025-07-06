@@ -16,6 +16,5 @@ namespace BisiyonPanelAPI.Common
         [StringLength(50)]
         public string Durum { get; set; }
         public Enum_UyeDurumTip? EnumId { get; set; }
-
     }
 }
