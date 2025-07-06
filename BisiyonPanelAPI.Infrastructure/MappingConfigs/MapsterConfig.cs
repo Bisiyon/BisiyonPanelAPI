@@ -15,7 +15,8 @@ public static class MapsterConfig
                 .NewConfig()
                 .Map(dest => dest.BlokName, src => src.Blok.Ad)
                 .Map(dest => dest.MalSahibi, src => src.MeskenUyes.FirstOrDefault(x => x.Uye.UyeDurumTip.EnumId == Enum_UyeDurumTip.EvSahibi).Uye.Ad)
-                .Map(dest => dest.Oturan, src => src.MeskenUyes.FirstOrDefault(x => x.Uye.UyeDurumTip.EnumId == Enum_UyeDurumTip.Kiraci).Uye.Ad);
+                .Map(dest => dest.Oturan, src => src.MeskenUyes.FirstOrDefault(x => x.Uye.UyeDurumTip.EnumId == Enum_UyeDurumTip.Kiraci).Uye.Ad)
+                .Map(dest => dest.AidatGrubuAdi, src => src.AidatGrup.Ad);
 
                 // .Map(dest => dest.Oturan, src => src.MeskenUyes.FirstOrDefault(x => x.Uye.UyeDurumTipId == ).Uye.Ad);
 
