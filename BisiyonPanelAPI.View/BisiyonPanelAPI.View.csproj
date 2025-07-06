@@ -9,5 +9,6 @@
         <PackageReference Include="Mapster" Version="7.4.0" />
       <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+    <ProjectReference Include="../BisiyonPanelAPI.Domain/BisiyonPanelAPI.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
 using BisiyonPanelAPI.View;
 using BisiyonPanelAPI.View.BussinesObjects;
+using BisiyonPanelAPI.View.MeskenView.Response;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -129,6 +130,13 @@ namespace BisiyonPanelAPI.Service
                     Data = false
                 };
             }
+        }
+
+
+        public async Task<PagedResult<List<GetAllMeskenListResponseDto>>> GetAllMeskenList(DataFilterModelView model)
+        {
+            var result = await _unitOfWork.Repository<Mesken>().GetAllAsync<GetAllMeskenListResponseDto>(model, query => query.Include(x => x.Blok));
+            return result;
         }
     }
 }

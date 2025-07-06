@@ -78,7 +78,6 @@ namespace BisiyonPanelAPI.Service
             try
             {
                 IQueryable<T> query = _dbSet.AsQueryable();
-
                 if (model.FilterQuery != null)
                 {
                     query = query.BuildQuery(model.FilterQuery);
@@ -174,12 +173,13 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
+        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
             PagedResult<List<TDto>> result = new();
             try
             {
                 IQueryable<T> query = _dbSet.AsQueryable();
+                if (includeFunc != null) query = includeFunc(query);
 
                 if (model.FilterQuery != null)
                 {
@@ -197,10 +197,10 @@ namespace BisiyonPanelAPI.Service
                 {
                     query = query.Skip((model.Page - 1) * model.PageSize).Take(model.PageSize);
                 }
-                var data = await query.ToListAsync();
+                var testbora = query.ProjectToType<TDto>();
+                var dtoList = await query.ProjectToType<TDto>().ToListAsync();
                 var count = await query.CountAsync();
                 result.TotalRowCount = count;
-                var dtoList = data.Adapt<List<TDto>>();
                 result.Data = dtoList;
                 result.State = ResultState.Successfull;
             }

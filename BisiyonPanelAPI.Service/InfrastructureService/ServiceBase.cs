@@ -42,9 +42,9 @@ namespace BisiyonPanelAPI.Service
             return await _unitOfWork.Repository<T>().Delete(id);
         }
 
-        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model)
+        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(model);
+            return await _unitOfWork.Repository<T>().GetAllAsync<TDto>(model,includeFunc);
         }
         public async Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model)
         {

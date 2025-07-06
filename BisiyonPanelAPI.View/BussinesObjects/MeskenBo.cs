@@ -40,7 +40,7 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             get => _Ad;
             set { _Ad = value; }
         }
-    
+
         private int? _M2;
         public int? M2
         {
@@ -64,11 +64,12 @@ namespace BisiyonPanelAPI.View.BussinesObjects
         {
             get => _AidatGrupId;
             set { _AidatGrupId = value; }
-        } 
+        }
         [ValidateNever]
         public AidatGrupBo AidatGrup { get; set; }
         [ValidateNever]
         public MeskenTipiBo MeskenTipi { get; set; }
+
 
     }
 }

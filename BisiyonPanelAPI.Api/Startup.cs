@@ -3,6 +3,7 @@ using Autofac;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Service;
+using BisiyonPanelAPI.View;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace BisiyonPanelAPI.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            MapsterConfig.RegisterMappings();
             var mvcBuilder = services.AddControllers(mvcOptions =>
                     {
                         mvcOptions.EnableEndpointRouting = false;

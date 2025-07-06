@@ -91,5 +91,13 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
+        [HttpPost("GetAllMeskenList")]
+        public async Task<IActionResult> GetAllMeskenList(DataFilterModelView model)
+        {
+            var result = await _meskenService.GetAllMeskenList(model);
+            if (result.Data == null)
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }
