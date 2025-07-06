@@ -10,8 +10,7 @@ namespace BisiyonPanelAPI.Domain
         [StringLength(100)]
         public string Ad { get; set; }
         public int ToplamDaireSayisi { get; set; }
-        public int ToplamKatSayisi { get; set; }
-        public int VarsayilanKattakiDaireSayisi { get; set; }
+        public int ToplamKatSayisi { get; set; } 
         public int KatBaslangicKati { get; set; }
         public int? IlId { get; set; }
         public int? IlceId { get; set; }

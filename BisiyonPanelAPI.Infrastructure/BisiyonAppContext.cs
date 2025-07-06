@@ -76,5 +76,7 @@ namespace BisiyonPanelAPI.Infrastructure
         public virtual DbSet<PersonelGorev> PersonelGorev { get; set; }
         public virtual DbSet<PersonelGorevHareket> PersonelGorevHareket { get; set; }
         public virtual DbSet<AracHareket> AracHareket { get; set; }
+        public virtual DbSet<GiderGrup> GiderGrup { get; set; }
+        public virtual DbSet<Gider> Gider { get; set; }
     }
 }
