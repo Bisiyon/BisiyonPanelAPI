@@ -78,14 +78,14 @@ namespace BisiyonPanelAPI.Service
             }
         }
 
-        public async Task<Result<Mesken>> UpdateAsync(MeskenBo entity)
+        public async Task<Result<bool>> UpdateAsync(MeskenBo entity)
         {
             try
             {
                 var existing = await _unitOfWork.Repository<Mesken>().GetByIdAsync<MeskenBo>(entity.Id);
                 if (existing == null)
                 {
-                    return new Result<Mesken>
+                    return new Result<bool>
                     {
                         State = ResultState.Fail,
                         Message = "Mesken bulunamadı."
@@ -93,15 +93,15 @@ namespace BisiyonPanelAPI.Service
                 }
                 var updated = await _unitOfWork.Repository<Mesken>().Update<MeskenBo>(entity);
                 var updatedEntity = await _unitOfWork.SaveChangesAsync();
-                return new Result<Mesken>
+                return new Result<bool>
                 {
-                    State = ResultState.Successfull,
-                    Data = _unitOfWork.Repository<Mesken>().GetByIdAsync(entity.Id).Result.Data,
+                    State = updatedEntity.State,
+                    Data = updatedEntity.Data,
                 };
             }
             catch (Exception ex)
             {
-                return new Result<Mesken>
+                return new Result<bool>
                 {
                     State = ResultState.Fail,
                     Message = "Mesken güncellenemedi. Hata: " + ex.Message

@@ -11,7 +11,7 @@ namespace BisiyonPanelAPI.Interface
         Task<Result<List<Mesken>>> GetAll();
         Task<Result<MeskenBo>> GetById(int id);
         Task<Result<Mesken>> InsertAsync(MeskenBo entity);
-        Task<Result<Mesken>> UpdateAsync(MeskenBo entity);
+        Task<Result<bool>> UpdateAsync(MeskenBo entity);
         Task<Result<bool>> DeleteAsync(int id);
         Task<PagedResult<List<GetAllMeskenListResponseDto>>> GetAllMeskenList(DataFilterModelView model);
     }

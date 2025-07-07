@@ -44,7 +44,7 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpPut]
-        public async Task<ActionResult<Result<Mesken>>> Update([FromBody] MeskenBo bo)
+        public async Task<ActionResult<Result<bool>>> Update([FromBody] MeskenBo bo)
         {
             var result = await _meskenService.UpdateAsync(bo);
             if (result.State == ResultState.Fail)
