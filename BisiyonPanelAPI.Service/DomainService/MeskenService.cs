@@ -38,18 +38,18 @@ namespace BisiyonPanelAPI.Service
             };
         }
 
-        public async Task<Result<Mesken>> GetById(int id)
+        public async Task<Result<MeskenBo>> GetById(int id)
         {
-            var item = await _unitOfWork.Repository<Mesken>().GetByIdAsync(id);
+            var item = await _unitOfWork.Repository<Mesken>().GetByIdAsync<MeskenBo>(id);
             if (item == null)
             {
-                return new Result<Mesken>
+                return new Result<MeskenBo>
                 {
                     State = ResultState.Fail,
                     Message = "Mesken bulunamadı."
                 };
             }
-            return new Result<Mesken>
+            return new Result<MeskenBo>
             {
                 State = ResultState.Successfull,
                 Data = item.Data

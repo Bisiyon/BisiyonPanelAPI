@@ -23,8 +23,8 @@ namespace BisiyonPanelAPI.Api
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Mesken>> GetById(int id)
+        [HttpGet("GetById")]
+        public async Task<ActionResult<MeskenBo>> GetById(int id)
         {
             var mesken = await _meskenService.GetById(id);
             if (mesken == null)
