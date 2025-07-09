@@ -4,6 +4,7 @@ using BisiyonPanelAPI.Infrastructure;
 using BisiyonPanelAPI.Interface;
 using BisiyonPanelAPI.View;
 using BisiyonPanelAPI.View.BussinesObjects;
+using BisiyonPanelAPI.View.UyeView.Response;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -150,6 +151,30 @@ namespace BisiyonPanelAPI.Service
             }
 
             return result;
+        }
+
+        public async Task<Result<List<MeskenUyeListView>>> GetUyeByMeskenId(int id)
+        {
+            var result = await _unitOfWork.Repository<MeskenUye>().GetAllAsync<MeskenUyeListView>(
+                x => x.MeskenId == id,
+                query => query.Include(mu => mu.Uye).Include(x => x.UyeDurumTip)
+                               .Include(mu => mu.Mesken)
+            );
+
+            if (result == null || result.Data == null || !result.Data.Any())
+            {
+                return new Result<List<MeskenUyeListView>>
+                {
+                    State = ResultState.Fail,
+                    Message = "Bu meskene ait üye bulunamadı."
+                };
+            }
+ 
+            return new Result<List<MeskenUyeListView>>
+            {
+                State = ResultState.Successfull,
+                Data = result.Data.ToList()
+            };
         }
     }
 }

@@ -70,6 +70,7 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
+
         [HttpPost("CreateNewUye")]
         public async Task<IActionResult> CreateNewUye([FromBody] UyeBo bo)
         {
@@ -79,5 +80,14 @@ namespace BisiyonPanelAPI.Api
             return Ok(result);
         }
 
+        [HttpGet("GetUyeByMeskenId")]
+        public async Task<ActionResult<Uye>> GetUyeByMeskenId(int id)
+        {
+            var result = await _uyeService.GetUyeByMeskenId(id);
+
+            if (result.Data == null)
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
     }
 }

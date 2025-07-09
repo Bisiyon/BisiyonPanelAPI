@@ -2,6 +2,7 @@ using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.View;
 using BisiyonPanelAPI.View.BussinesObjects;
+using BisiyonPanelAPI.View.UyeView.Response;
 
 namespace BisiyonPanelAPI.Interface
 {
@@ -13,5 +14,6 @@ namespace BisiyonPanelAPI.Interface
         Task<Result<Uye>> UpdateAsync(UyeBo entity);
         Task<Result<bool>> DeleteAsync(int id);
         Task<Result<UyeBo>> CreateUye(UyeBo bo);
+        Task<Result<List<MeskenUyeListView>>> GetUyeByMeskenId(int id);
     }
 }
