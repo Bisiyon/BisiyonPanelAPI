@@ -38,18 +38,18 @@ namespace BisiyonPanelAPI.Service
             };
         }
 
-        public async Task<Result<MeskenBo>> GetById(int id)
+        public async Task<Result<Mesken>> GetById(int id)
         {
-            var item = await _unitOfWork.Repository<Mesken>().GetByIdAsync<MeskenBo>(id);
+            var item = await _unitOfWork.Repository<Mesken>().GetByIdAsync(id);
             if (item == null)
             {
-                return new Result<MeskenBo>
+                return new Result<Mesken>
                 {
                     State = ResultState.Fail,
                     Message = "Mesken bulunamadı."
                 };
             }
-            return new Result<MeskenBo>
+            return new Result<Mesken>
             {
                 State = ResultState.Successfull,
                 Data = item.Data
@@ -131,7 +131,6 @@ namespace BisiyonPanelAPI.Service
                 };
             }
         }
-
 
         public async Task<PagedResult<List<GetAllMeskenListResponseDto>>> GetAllMeskenList(DataFilterModelView model)
         {

@@ -21,7 +21,7 @@ namespace BisiyonPanelAPI.View.MeskenView.Response
 
         // public int? MeskenTipId { get; set; }
         // public int MalikHisse { get; set; } = 100;
-        // public List<MeskenUyeBo> MeskenUyes { get; set; }
+         public List<MeskenUyeBo> MeskenUyes { get; set; }
         
 
     }

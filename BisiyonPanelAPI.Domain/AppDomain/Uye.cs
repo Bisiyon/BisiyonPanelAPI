@@ -33,6 +33,6 @@ namespace BisiyonPanelAPI.Domain
 
         [ForeignKey(nameof(IlceId))]
         public Ilce Ilce { get; set; }
-     
+        public ICollection<UyeHareket> UyeHarekets { get; set; } = new List<UyeHareket>();
     }
 }

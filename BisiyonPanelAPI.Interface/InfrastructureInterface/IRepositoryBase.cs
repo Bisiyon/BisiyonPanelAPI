@@ -13,7 +13,7 @@ namespace BisiyonPanelAPI.Interface
         Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
         Task<PagedResult<List<T>>> GetAllAsync(DataFilterModelView model);
         Task<Result<T?>> GetByIdAsync(int id);
-        Task<Result<TDto?>> GetByIdAsync<TDto>(int id);
+        Task<Result<TDto?>> GetByIdAsync<TDto>(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null);
         // Insert methods
         Task<T> Insert(T entity);
         Task<T> Insert<TDto>(TDto entity);
@@ -21,6 +21,6 @@ namespace BisiyonPanelAPI.Interface
         Task<bool> Update(T newEntity);
         Task<bool> Update<TDto>(TDto newEntity);
         Task<bool> Delete(int id);
-        
+
     }
 }

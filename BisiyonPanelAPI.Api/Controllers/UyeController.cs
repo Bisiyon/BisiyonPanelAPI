@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.View.BussinesObjects;
+using BisiyonPanelAPI.View.UyeView.Response;
 
 namespace BisiyonPanelAPI.Api
 {
     public class UyeController : BaseController
     {
         private readonly IUyeService _uyeService;
+        private readonly IMeskenUyeService _meskenUyeService;
 
-        public UyeController(IUyeService uyeService)
+        public UyeController(IUyeService uyeService, IMeskenUyeService meskenUyeService)
         {
             _uyeService = uyeService;
+            _meskenUyeService = meskenUyeService;
         }
 
         [HttpGet]
@@ -67,6 +70,25 @@ namespace BisiyonPanelAPI.Api
         {
             var result = await _uyeService.GetAllAsync(model);
             if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
+
+        [HttpPost("CreateNewUye")]
+        public async Task<IActionResult> CreateNewUye([FromBody] UyeBo bo)
+        {
+            var result = await _uyeService.CreateUye(bo);
+            if (result.Data == null)
+                return NotFound("Data is null");
+            return Ok(result);
+        }
+
+        [HttpGet("GetUyeByMeskenId")]
+        public async Task<ActionResult<Uye>> GetUyeByMeskenId(int id)
+        {
+            var result = await _uyeService.GetUyeByMeskenId(id);
+
+            if (result.Data == null)
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }

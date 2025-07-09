@@ -110,12 +110,23 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id)
+        public async Task<Result<TDto?>> GetByIdAsync<TDto>(int id, Func<IQueryable<T>, IQueryable<T>>? includeFunc = null)
         {
             Result<TDto?> result = new();
             try
             {
-                var data = await _dbSet.FindAsync(id);
+                IQueryable<T> query = _dbSet.AsQueryable();
+                if (includeFunc != null)
+                    query = includeFunc(query); 
+
+                var entityType = _context.Model.FindEntityType(typeof(T));
+                var keyProperty = entityType?.FindPrimaryKey()?.Properties.FirstOrDefault();
+
+                if (keyProperty == null)
+                    throw new Exception($"Primary key not found for entity {typeof(T).Name}");
+                    
+                string keyName = keyProperty.Name;
+                var data = await query.FirstOrDefaultAsync(x => EF.Property<int>(x, keyName) == id);
                 var dtoData = data.Adapt<TDto>();
                 result.Data = dtoData;
                 result.State = ResultState.Successfull;
@@ -128,8 +139,6 @@ namespace BisiyonPanelAPI.Service
             }
             return result;
         }
-
-
 
         public async Task<Result<List<TDto>>> GetAllAsync<TDto>(Expression<Func<T, bool>>? predicate, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
@@ -173,7 +182,7 @@ namespace BisiyonPanelAPI.Service
             return result;
         }
 
-        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model,Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        public async Task<PagedResult<List<TDto>>> GetAllAsync<TDto>(DataFilterModelView model, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
             PagedResult<List<TDto>> result = new();
             try

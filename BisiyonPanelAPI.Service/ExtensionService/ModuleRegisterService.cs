@@ -35,6 +35,7 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<DemirbasService>().As<IDemirbasService>().InstancePerLifetimeScope();
                      builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
                      builder.RegisterType<PersonelTipService>().As<IPersonelTipService>().InstancePerLifetimeScope();
+                     builder.RegisterType<MeskenUyeService>().As<IMeskenUyeService>().InstancePerLifetimeScope();
 
                      #endregion
 
