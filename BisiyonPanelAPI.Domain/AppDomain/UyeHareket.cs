@@ -8,10 +8,14 @@ namespace BisiyonPanelAPI.Domain
         [Key]
         public int Id { get; set; }
         public int UyeId { get; set; }
+        public int MeskenId { get; set; }
         public DateTime IslemTarih { get; set; }
         public int HareketTipId { get; set; }
 
         [ForeignKey(nameof(UyeId))]
         public Uye Uye { get; set; }
+        
+        [ForeignKey(nameof(MeskenId))]
+        public Mesken Mesken { get; set; }
     }
 }

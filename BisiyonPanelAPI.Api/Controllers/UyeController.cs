@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using BisiyonPanelAPI.Domain;
 using BisiyonPanelAPI.Common;
 using BisiyonPanelAPI.View.BussinesObjects;
+using BisiyonPanelAPI.View.UyeView.Response;
 
 namespace BisiyonPanelAPI.Api
 {
     public class UyeController : BaseController
     {
         private readonly IUyeService _uyeService;
+        private readonly IMeskenUyeService _meskenUyeService;
 
-        public UyeController(IUyeService uyeService)
+        public UyeController(IUyeService uyeService, IMeskenUyeService meskenUyeService)
         {
             _uyeService = uyeService;
+            _meskenUyeService = meskenUyeService;
         }
 
         [HttpGet]

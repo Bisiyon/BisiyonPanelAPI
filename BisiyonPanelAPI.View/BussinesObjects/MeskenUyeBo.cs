@@ -6,6 +6,7 @@ namespace BisiyonPanelAPI.View.BussinesObjects
     public class MeskenUyeBo
     {
         private int _Id;
+        [Key]
         public int Id
         {
             get => _Id;
@@ -19,13 +20,27 @@ namespace BisiyonPanelAPI.View.BussinesObjects
             set { _UyeId = value; }
         }
 
+        private int _UyeDurumTipId;
+        public int UyeDurumTipId
+        {
+            get => _UyeDurumTipId;
+            set { _UyeDurumTipId = value; }
+        }
+
         private int _MeskenId;
         public int MeskenId
         {
             get => _MeskenId;
             set { _MeskenId = value; }
         }
-        public UyeBo Uye { get; set; }
+
+        private int _MalikHisse = 100;
+        public int MalikHisse
+        {
+            get => _MalikHisse;
+            set { _MalikHisse = value; }
+        }
+
 
     }
 }
