@@ -130,5 +130,26 @@ namespace BisiyonPanelAPI.Service
                 };
             }
         }
+
+        public async Task<Result<UyeBo>> CreateUye(UyeBo bo)
+        {
+            var result = new Result<UyeBo>() { State = ResultState.Fail };
+            try
+            {
+                var uye = await _unitOfWork.Repository<Uye>().Insert<UyeBo>(bo);
+
+                var addToUye = await _unitOfWork.SaveChangesAsync();
+                if (addToUye.IsSuccessfull)
+                {
+                    result = await _unitOfWork.Repository<Uye>().GetByIdAsync<UyeBo>(uye.Id);
+                }
+            }
+            catch (System.Exception ex)
+            {
+
+            }
+
+            return result;
+        }
     }
 }

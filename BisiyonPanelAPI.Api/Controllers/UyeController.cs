@@ -70,5 +70,14 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
+        [HttpPost("CreateNewUye")]
+        public async Task<IActionResult> CreateNewUye([FromBody] UyeBo bo)
+        {
+            var result = await _uyeService.CreateUye(bo);
+            if (result.Data == null)
+                return NotFound("Data is null");
+            return Ok(result);
+        }
+
     }
 }

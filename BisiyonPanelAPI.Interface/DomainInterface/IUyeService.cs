@@ -12,5 +12,6 @@ namespace BisiyonPanelAPI.Interface
         Task<Result<Uye>> InsertAsync(UyeBo entity);
         Task<Result<Uye>> UpdateAsync(UyeBo entity);
         Task<Result<bool>> DeleteAsync(int id);
+        Task<Result<UyeBo>> CreateUye(UyeBo bo);
     }
 }
