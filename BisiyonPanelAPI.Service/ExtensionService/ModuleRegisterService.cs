@@ -37,6 +37,7 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<PersonelTipService>().As<IPersonelTipService>().InstancePerLifetimeScope();
                      builder.RegisterType<AracHareketService>().As<IAracHareketService>().InstancePerLifetimeScope();
                      builder.RegisterType<PersonelGorevService>().As<IPersonelGorevService>().InstancePerLifetimeScope();
+                     builder.RegisterType<MeskenUyeService>().As<IMeskenUyeService>().InstancePerLifetimeScope();
 
 
 
