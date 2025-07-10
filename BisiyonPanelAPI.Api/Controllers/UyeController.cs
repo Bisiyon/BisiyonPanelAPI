@@ -71,6 +71,14 @@ namespace BisiyonPanelAPI.Api
                 return NotFound("No records found matching the filter criteria.");
             return Ok(result);
         }
+        [HttpPost("GetAllUyeByFilterByDto")]
+        public async Task<IActionResult> GetAllUyeByFilterByDto(DataFilterModelView model)
+        {
+            var result = await _uyeService.GetAllAsync<UyeBo>(model);
+            if (result.Data == null || !result.Data.Any())
+                return NotFound("No records found matching the filter criteria.");
+            return Ok(result);
+        }
 
         [HttpPost("CreateNewUye")]
         public async Task<IActionResult> CreateNewUye([FromBody] UyeBo bo)
@@ -82,7 +90,7 @@ namespace BisiyonPanelAPI.Api
         }
 
         [HttpGet("GetUyeByMeskenId")]
-        public async Task<ActionResult<Uye>> GetUyeByMeskenId(int id)
+        public async Task<ActionResult<List<MeskenUyeListView>>> GetUyeByMeskenId(int id)
         {
             var result = await _uyeService.GetUyeByMeskenId(id);
 
