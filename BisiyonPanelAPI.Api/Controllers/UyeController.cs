@@ -9,13 +9,11 @@ namespace BisiyonPanelAPI.Api
 {
     public class UyeController : BaseController
     {
-        private readonly IUyeService _uyeService;
-        private readonly IMeskenUyeService _meskenUyeService;
+        private readonly IUyeService _uyeService; 
 
-        public UyeController(IUyeService uyeService, IMeskenUyeService meskenUyeService)
+        public UyeController(IUyeService uyeService)
         {
             _uyeService = uyeService;
-            _meskenUyeService = meskenUyeService;
         }
 
         [HttpGet]

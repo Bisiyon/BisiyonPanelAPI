@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using BisiyonPanelAPI.Api.Middlewares;
+
 
 namespace BisiyonPanelAPI.Api
 {
@@ -85,7 +87,7 @@ namespace BisiyonPanelAPI.Api
             });
 
             app.UseCors();
-
+            app.UseMiddleware<GlobalExceptionMiddleware>();
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();

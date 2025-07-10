@@ -25,8 +25,8 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<AidatGrupService>().As<IAidatGrupService>().InstancePerLifetimeScope();
                      builder.RegisterType<AracService>().As<IAracService>().InstancePerLifetimeScope();
                      builder.RegisterType<BlokService>().As<IBlokService>().InstancePerLifetimeScope();
-                     builder.RegisterType<IlService>().As<IIlService>().InstancePerLifetimeScope(); 
-                     builder.RegisterType<IlceService>().As<IlceService>().InstancePerLifetimeScope();
+                     builder.RegisterType<IlService>().As<IIlService>().InstancePerLifetimeScope();
+                     builder.RegisterType<IlceService>().As<IIlceService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenService>().As<IMeskenService>().InstancePerLifetimeScope();
                      builder.RegisterType<MeskenTipiService>().As<IMeskenTipiService>().InstancePerLifetimeScope();
                      builder.RegisterType<UyeService>().As<IUyeService>().InstancePerLifetimeScope();
@@ -35,7 +35,11 @@ namespace BisiyonPanelAPI.Service
                      builder.RegisterType<DemirbasService>().As<IDemirbasService>().InstancePerLifetimeScope();
                      builder.RegisterType<PersonelService>().As<IPersonelService>().InstancePerLifetimeScope();
                      builder.RegisterType<PersonelTipService>().As<IPersonelTipService>().InstancePerLifetimeScope();
-                     builder.RegisterType<MeskenUyeService>().As<IMeskenUyeService>().InstancePerLifetimeScope();
+                     builder.RegisterType<AracHareketService>().As<IAracHareketService>().InstancePerLifetimeScope();
+                     builder.RegisterType<PersonelGorevService>().As<IPersonelGorevService>().InstancePerLifetimeScope();
+
+
+
 
                      #endregion
 

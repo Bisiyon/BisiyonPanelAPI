@@ -5,7 +5,7 @@
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     /// <inheritdoc />
-    public partial class UyeHareketNewPropAdd : Microsoft.EntityFrameworkCore.Migrations.Migration
+    public partial class UyeHareketV2 : Microsoft.EntityFrameworkCore.Migrations.Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BisiyonPanelAPI.Migration.Migrations
 {
     [DbContext(typeof(BisiyonAppContext))]
-    [Migration("20250709214905_UyeHareketNewPropAdd")]
-    partial class UyeHareketNewPropAdd
+    [Migration("20250710194256_UyeHareketeMeskenEklendi")]
+    partial class UyeHareketeMeskenEklendi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

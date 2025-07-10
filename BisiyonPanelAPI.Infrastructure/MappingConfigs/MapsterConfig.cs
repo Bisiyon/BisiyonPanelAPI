@@ -29,9 +29,9 @@ namespace BisiyonPanelAPI.Common.MappingConfigs
                .Map(dest => dest.FullName, src => src.Uye.Ad + " " + src.Uye.Soyad)
                .Map(dest => dest.UyeTipIsmi, src => src.UyeDurumTip.Durum)
                .Map(dest => dest.MalikHisse, src => src.MalikHisse.ToString() + "%")
-               .Map(dest => dest.Miktar, src => src.MalikHisse.ToString() + "%")
-               .Map(dest => dest.BaslangicTarihi, src => src.Uye.UyeHarekets.Where(x => x.HareketTipId == (int)Enum_UyeHareketTip.TasinmaGiris).OrderByDescending(x => x.IslemTarih).FirstOrDefault().IslemTarih.ToString("dd.MM.yyyy"))
-               .Map(dest => dest.BitisTarihi, src => src.Uye.UyeHarekets.Where(x => x.HareketTipId == (int)Enum_UyeHareketTip.TasinmaCikis).OrderByDescending(x => x.IslemTarih).FirstOrDefault().IslemTarih.ToString("dd.MM.yyyy"));
+               .Map(dest => dest.Miktar, src => src.MalikHisse.ToString() + "%");
+               //.Map(dest => dest.BaslangicTarihi, src => src.Uye.UyeHarekets.Where(x => x.HareketTipId == (int)Enum_UyeHareketTip.TasinmaGiris).OrderByDescending(x => x.IslemTarih).FirstOrDefault().IslemTarih.ToString("dd.MM.yyyy"))
+               //.Map(dest => dest.BitisTarihi, src => src.Uye.UyeHarekets.Where(x => x.HareketTipId == (int)Enum_UyeHareketTip.TasinmaCikis).OrderByDescending(x => x.IslemTarih).FirstOrDefault().IslemTarih.ToString("dd.MM.yyyy"));
         }
     }
 }

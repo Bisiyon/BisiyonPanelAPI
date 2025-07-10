@@ -25,7 +25,9 @@ namespace BisiyonPanelAPI.Api
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine("Unhandled exception: " + ex.ToString());
+                File.AppendAllText("fatal-errors.log", ex.ToString());
+                throw;
             }
             finally
             {
